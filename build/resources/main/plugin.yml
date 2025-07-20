@@ -1,0 +1,19 @@
+name: ManhuntPlus
+version: '1.0-SNAPSHOT'
+main: net.tutla.manhuntPlus.ManhuntPlus
+api-version: '1.21'
+authors: [ TutlaMC ]
+website: https://tutla.net
+commands:
+  compass:
+    description: Gives a tracking compass
+    usage: /<command> <player>
+  twist:
+    description: Changes the twist
+    usage: /challenge
+  speedrunner:
+    description: Set the runner
+    usage: /<command> <player>
+  removespeedrunner:
+    description: Set the runner
+    usage: /<command> <player>
