@@ -12,6 +12,12 @@ Manhunt+ is a powerful manhunt plugin with compass tracking & twists!
   - `DEFAULT` - Default Twist, doesn't add anything 
   - `PIG_OP_LOOT` - Pigs drop OP loot (only for the speedrunner!)
   - So many more coming!
+- Coming Soon: 
+  - Hunter Tracking, `/hunter`
+  - Many more twists such as OP Hunters
+  - Custom Twist Tweaker
+  - Lootpool Modifier
+  - Manhunt Timer + `/manhunt start`
 ---
 ## Support, Tracking & More
 
