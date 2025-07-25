@@ -16,7 +16,7 @@ commands:
     usage: /<command> <player>
   twist:
     description: Changes the twist
-    usage: /challenge
+    usage: /<command> <twist>
     permission: permission.node
   speedrunner:
     description: Add or remove a runner
@@ -29,4 +29,8 @@ commands:
   manhunt:
     description: Start/stop/set cooldown
     usage: /<command> start|stop|cooldown|help
+    permission: permission.node
+  surround:
+    description: Surround a speedrunner
+    usage: /<command> <player>
     permission: permission.node
