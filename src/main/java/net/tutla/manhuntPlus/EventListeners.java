@@ -108,7 +108,6 @@ public class EventListeners implements Listener {
         ItemStack item = event.getItem();
 
         if (item.getType() == Material.MILK_BUCKET) {
-            player.sendMessage("weeb");
             ItemMeta meta = item.getItemMeta();
             NamespacedKey key = new NamespacedKey(ManhuntPlus.getInstance(), "milked_from");
 

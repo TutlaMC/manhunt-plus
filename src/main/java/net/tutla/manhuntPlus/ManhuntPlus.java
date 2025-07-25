@@ -108,6 +108,29 @@ public final class ManhuntPlus extends JavaPlugin {
         }
     }
 
+    // utils
+    public void giveCompass(Player target, Player player){
+        if (!speedrunners.contains(target)) {
+            player.sendMessage("§cPlayer is not a speedrunner!");
+
+        } else {
+            if (target != null && target.isOnline()) {
+                ItemStack compass = new ItemStack(Material.COMPASS);
+                CompassMeta meta = (CompassMeta) compass.getItemMeta();
+                if (meta != null) {
+                    Location loc = target.getLocation();
+                    meta.setLodestone(loc);
+                    meta.setLodestoneTracked(false);
+                    compass.setItemMeta(meta);
+                }
+                player.getInventory().addItem(compass);
+                player.sendMessage("Tracking compass given for speedrunner "+target.getName());
+            } else {
+                player.sendMessage("§cPlayer not found or not online");
+            }
+        }
+    }
+
 
     // actual shi
     @Override
@@ -136,33 +159,22 @@ public final class ManhuntPlus extends JavaPlugin {
                 return true;
             }
 
-            if (args.length == 1){
-                Player target = Bukkit.getPlayer(args[0]);
-                if (target != null && target.isOnline()) {
-                    if (!speedrunners.contains(target)) {
-                        player.sendMessage("§cPlayer is not a speedrunner!");
-                        return true;
-                    }
-                    ItemStack compass = new ItemStack(Material.COMPASS);
-                    CompassMeta meta = (CompassMeta) compass.getItemMeta();
-                    if (meta != null) {
-                        Location loc = target.getLocation();
-                        meta.setLodestone(loc);
-                        meta.setLodestoneTracked(false);
-                        compass.setItemMeta(meta);
-                    }
-                    player.getInventory().addItem(compass);
-                    player.sendMessage("Tracking compass given for speedrunner "+target.getName());
-                } else {
-                    player.sendMessage("§cPlayer not found or not online");
-                }
-
-                return true;
+            Player target;
+            if (args.length >= 1){
+                target = Bukkit.getPlayer(args[0]);
+            } else {
+                target = speedrunners.getFirst();
             }
+            giveCompass(target, player);
+            return true;
         } else if (cmd.getName().equalsIgnoreCase("speedrunner")){
             if (args.length == 2){
                 if (args[0].equalsIgnoreCase("add")){
                     Player target = Bukkit.getPlayer(args[1]);
+                    if (hunters.contains(target)) {
+                        player.sendMessage("§cPlayer is a hunter!");
+                        return true;
+                    }
                     if (target != null && target.isOnline()) {
                         if (!speedrunners.contains(target)){
                             addSpeedrunner(target);
@@ -192,9 +204,14 @@ public final class ManhuntPlus extends JavaPlugin {
             }
             return false;
         } else if (cmd.getName().equalsIgnoreCase("hunter")){
+
             if (args.length == 2){
                 if (args[0].equalsIgnoreCase("add")){
                     Player target = Bukkit.getPlayer(args[1]);
+                    if (speedrunners.contains(target)) {
+                        player.sendMessage("§cPlayer is a speedrunner!");
+                        return true;
+                    }
                     if (target != null && target.isOnline()) {
                         if (!hunters.contains(target)){
                             addHunter(target);
@@ -294,6 +311,43 @@ public final class ManhuntPlus extends JavaPlugin {
             }
 
             return true;
+        } else if (cmd.getName().equalsIgnoreCase("surround")){
+            if (speedrunners.isEmpty()) {
+                player.sendMessage("§cNo speedrunner set.");
+                return true;
+            }
+
+            if (args.length >= 1){
+                Player target = Bukkit.getPlayer(args[0]);
+                if (target != null && target.isOnline()) {
+                    if (!speedrunners.contains(target)) {
+                        player.sendMessage("§cPlayer is not a speedrunner!");
+                        return true;
+                    }
+
+                    Location center = target.getLocation();
+                    double radius = 3.0;
+                    int n = hunters.size();
+                    //chatgpt slop, my ass is too stupid to calculate ts
+                    for (int i = 0; i < n; i++) {
+                        Player p = hunters.get(i);
+
+                        double angle = 2 * Math.PI * i / n;
+                        double xOffset = radius * Math.cos(angle);
+                        double zOffset = radius * Math.sin(angle);
+
+                        Location newLoc = center.clone().add(xOffset, 0, zOffset);
+                        newLoc.setDirection(center.toVector().subtract(newLoc.toVector())); // face center
+                        p.teleport(newLoc);
+                    }
+                    player.sendMessage("Surrounded  "+target.getName());
+                } else {
+                    player.sendMessage("§cPlayer not found or not online");
+                }
+
+                return true;
+            }
+
         }
 
         return false;
