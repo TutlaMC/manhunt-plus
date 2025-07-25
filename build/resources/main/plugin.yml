@@ -4,6 +4,12 @@ main: net.tutla.manhuntPlus.ManhuntPlus
 api-version: '1.21'
 authors: [ TutlaMC ]
 website: https://tutla.net
+permissions:
+  permission.node:
+    description: "This is a permission node"
+    default: op
+    children:
+      permission.node.child: true
 commands:
   compass:
     description: Gives a tracking compass
@@ -11,12 +17,16 @@ commands:
   twist:
     description: Changes the twist
     usage: /challenge
+    permission: permission.node
   speedrunner:
     description: Add or remove a runner
     usage: /<command> add|remove <player>
+    permission: permission.node
   hunter:
     description: Add/remove a hunter
     usage: /<command> add|remove <player>
+    permission: permission.node
   manhunt:
     description: Start/stop/set cooldown
     usage: /<command> start|stop|cooldown|help
+    permission: permission.node

@@ -13,7 +13,7 @@ public class TwistsHelper {
     private static final Random random = new Random();
 
     public void tortureHunter(Player hunter) {
-        int choice = random.nextInt(8); // Update if adding more
+        int choice = random.nextInt(9);
         switch (choice) {
             case 0 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 2 * 60 * 20, 4)); // Mining fatigue V
             case 1 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2 * 60 * 20, 4));     // Blindness V
@@ -23,8 +23,8 @@ public class TwistsHelper {
             case 5 -> createSinkhole(hunter);
             case 6 -> launchToSky(hunter);
             case 7 -> clearHalfInventory(hunter);
+            case 8 -> hunter.setHealth(10);
         }
-        hunter.sendMessage("§cYou've been tortured!");
         hunter.getWorld().playSound(hunter.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.0f, 1.0f);
     }
 
@@ -32,23 +32,18 @@ public class TwistsHelper {
         Location loc = player.getLocation();
         World world = loc.getWorld();
         if (world == null) return;
-
-        int radius = 5;
-        int depth = 64;
-        for (int y = loc.getBlockY(); y > loc.getBlockY() - depth && y > 0; y--) {
-            for (int x = -radius; x <= radius; x++) {
-                for (int z = -radius; z <= radius; z++) {
+        for (int y = loc.getBlockY(); y > loc.getBlockY() - world.getMinHeight() && y >= world.getMinHeight(); y--) {
+            for (int x = -1; x <= 1; x++) {
+                for (int z = -1; z <= 1; z++) {
                     Location blockLoc = loc.clone().add(x, y - loc.getBlockY(), z);
                     world.getBlockAt(blockLoc).setType(Material.AIR);
                 }
             }
         }
-        player.sendMessage("§cA sinkhole swallowed you!");
     }
 
     private void launchToSky(Player player) {
-        player.setVelocity(new Vector(0, 10, 0)); // ~1000 blocks air velocity is not safe, do 10 instead
-        player.sendMessage("§cYou've been launched into the sky!");
+        player.setVelocity(new Vector(0, 10, 0)); //
     }
 
     private void clearHalfInventory(Player player) {

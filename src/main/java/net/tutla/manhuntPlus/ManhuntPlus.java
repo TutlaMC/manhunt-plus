@@ -114,8 +114,9 @@ public final class ManhuntPlus extends JavaPlugin {
     public void onEnable() {
         instance = this;
         basicLootPool = LootPool.createDefault();
+        TwistsHelper helper = new TwistsHelper();
 
-        getServer().getPluginManager().registerEvents(new EventListeners(), this);
+        getServer().getPluginManager().registerEvents(new EventListeners(helper), this);
         getLogger().info("Manhunt plugin loaded!");
     }
 
