@@ -15,12 +15,14 @@ import java.util.*;
 enum Twist {
     DEFAULT,
     PIG_OP_LOOT,
-    MILK_HUNTER_OP_LOOT
+    // MILK_HUNTER_OP_LOOT // not for now cuz of modrinth restrictions
 }
 
 public final class ManhuntPlus extends JavaPlugin {
+    // runtime shit
     private static ManhuntPlus instance;
     private Boolean started = false;
+    public Boolean waitingForStart = false;
     // runners/hunters
     private final List<Player> speedrunners = new ArrayList<>();
     private final List<Player> hunters = new ArrayList<>();
@@ -30,7 +32,6 @@ public final class ManhuntPlus extends JavaPlugin {
     private int timerTaskId = -1;
     private int countdownLimitMinutes = 0;
     private Boolean broadcastRemainingTime = false;
-
 
     // loot defs
     private static LootPool basicLootPool;
@@ -89,7 +90,7 @@ public final class ManhuntPlus extends JavaPlugin {
         timerTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             timer++;
 
-            if (timer % 60 == 0)
+            if (timer % (60)*30 == 0)
                 Bukkit.broadcastMessage("§eManhunt Timer: " + (timer / 60) + " minute(s)");
 
             if (countdownLimitMinutes > 0 && timer >= countdownLimitMinutes * 60) {
@@ -106,6 +107,27 @@ public final class ManhuntPlus extends JavaPlugin {
             timerTaskId = -1;
             Bukkit.broadcastMessage("§cManhunt stopped at " + (timer / 60) + " minute(s).");
         }
+    }
+
+    public Boolean startManhunt(){
+        waitingForStart = false;
+        if (!started) {
+            setStatus(true);
+            startTimer();
+            Bukkit.broadcastMessage("§aManhunt started!");
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean stopManhunt(){
+        if (started) {
+            setStatus(false);
+            stopTimer();
+            Bukkit.broadcastMessage("§aManhunt stopped!");
+            return true;
+        }
+        return false;
     }
 
     // utils
@@ -139,6 +161,7 @@ public final class ManhuntPlus extends JavaPlugin {
         basicLootPool = LootPool.createDefault();
         TwistsHelper helper = new TwistsHelper();
 
+        saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new EventListeners(helper), this);
         getLogger().info("Manhunt plugin loaded!");
     }
@@ -263,19 +286,12 @@ public final class ManhuntPlus extends JavaPlugin {
 
             switch (args[0].toLowerCase()) { // first time i actually used a switch case my whole life (if statements worked well so like it wasn't necessary but like worth trying)
                 case "start" -> {
-                    if (started) {
+                    if (!startManhunt()){
                         player.sendMessage("§cManhunt already running.");
-                    } else {
-                        Bukkit.broadcastMessage("§aManhunt started!");
-                        setStatus(true);
-                        startTimer();
                     }
                 }
                 case "stop" -> {
-                    if (started) {
-                        stopTimer();
-                        setStatus(false);
-                    } else {
+                    if (!stopManhunt()){
                         player.sendMessage("§cManhunt is not running.");
                     }
                 }
@@ -307,6 +323,10 @@ public final class ManhuntPlus extends JavaPlugin {
                     player.sendMessage("Manhunt countdown (max limit a manhunt can last in minutes) can be set using §e/manhunt cooldown");
                     player.sendMessage("Read full documentation on Modrinth/Discord/Website");
                 }
+                case "prepare" -> {
+                    waitingForStart = true;
+                    Bukkit.broadcastMessage("Waiting for speedrunner first hit");
+                }
                 default -> player.sendMessage("§cUnknown subcommand. Use: start, stop, countdown");
             }
 
@@ -326,9 +346,9 @@ public final class ManhuntPlus extends JavaPlugin {
                     }
 
                     Location center = target.getLocation();
-                    double radius = 3.0;
+                    double radius = getConfig().getDouble("surround-radius");
                     int n = hunters.size();
-                    //chatgpt slop, my ass is too stupid to calculate ts
+                    // chatgpt slop, my ass is too stupid to calculate ts
                     for (int i = 0; i < n; i++) {
                         Player p = hunters.get(i);
 
@@ -340,7 +360,7 @@ public final class ManhuntPlus extends JavaPlugin {
                         newLoc.setDirection(center.toVector().subtract(newLoc.toVector())); // face center
                         p.teleport(newLoc);
                     }
-                    player.sendMessage("Surrounded  "+target.getName());
+                    player.sendMessage("§aSurrounded  "+target.getName());
                 } else {
                     player.sendMessage("§cPlayer not found or not online");
                 }
@@ -373,7 +393,7 @@ public final class ManhuntPlus extends JavaPlugin {
             }
         } else if (cmd.getName().equalsIgnoreCase("manhunt")) {
             if (args.length == 1) {
-                return Arrays.asList("help","start", "stop", "countdown").stream()
+                return Arrays.asList("help","start", "stop", "countdown","prepare").stream()
                         .filter(s -> s.startsWith(args[0].toLowerCase()))
                         .toList();
             } else if (args.length == 2 && args[0].equalsIgnoreCase("countdown")) {

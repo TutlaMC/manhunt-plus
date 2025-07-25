@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -33,8 +34,7 @@ public class EventListeners implements Listener {
             ManhuntPlus.getInstance().removeSpeedrunner(player);
             if (ManhuntPlus.getInstance().getSpeedrunners().isEmpty()){
                 Bukkit.broadcastMessage("§aHunter(s) have won the Manhunt!");
-                ManhuntPlus.getInstance().stopTimer();
-                ManhuntPlus.getInstance().setStatus(false);
+                ManhuntPlus.getInstance().stopManhunt();
             }
         }
     }
@@ -56,20 +56,15 @@ public class EventListeners implements Listener {
                 if (drop != null) event.getDrops().add(drop);
             }
         } else if (event.getEntityType() == EntityType.ENDER_DRAGON) {
-            Player killer = event.getEntity().getKiller();
-            if (killer == null) return;
-
-            if (ManhuntPlus.getInstance().getSpeedrunners().contains(killer)){
-                if (ManhuntPlus.getInstance().getStatus() && !(ManhuntPlus.getInstance().getSpeedrunners().isEmpty())){
-                    Bukkit.broadcastMessage("§aSpeedrunner(s) have won the Manhunt!");
-                    ManhuntPlus.getInstance().stopTimer();
-                    ManhuntPlus.getInstance().setStatus(false);
-                }
+            if (ManhuntPlus.getInstance().getStatus() && !(ManhuntPlus.getInstance().getSpeedrunners().isEmpty())){
+                Bukkit.broadcastMessage("§aSpeedrunner(s) have won the Manhunt!");
+                ManhuntPlus.getInstance().stopManhunt();
             }
         }
     }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+        /*
         if (ManhuntPlus.getInstance().getTwist() != Twist.MILK_HUNTER_OP_LOOT) return;
 
         Player player = event.getPlayer();
@@ -100,10 +95,12 @@ public class EventListeners implements Listener {
             target.sendMessage("§aYou have been milked!");
             event.setCancelled(true);
         }
+        */
     }
 
     @EventHandler
     public void onPlayerConsume(PlayerItemConsumeEvent event) {
+        /*
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
@@ -120,11 +117,21 @@ public class EventListeners implements Listener {
                     }
                 }
             }
-        }
+        }*/
     }
 
+    @EventHandler
+    public void onHit(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player)) return;
+        if (!(event.getEntity() instanceof Player)) return;
 
+        Player hitter = (Player) event.getDamager();
+        Player victim = (Player) event.getEntity();
+        if (ManhuntPlus.getInstance().getSpeedrunners().contains(hitter) && ManhuntPlus.getInstance().getHunters().contains(victim)){
+            if (ManhuntPlus.getInstance().waitingForStart){
+                ManhuntPlus.getInstance().startManhunt();
+            }
+        }
 
-
-
+    }
 }

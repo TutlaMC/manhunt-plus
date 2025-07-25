@@ -27,10 +27,10 @@ commands:
     usage: /<command> add|remove <player>
     permission: permission.node
   manhunt:
-    description: Start/stop/set cooldown
-    usage: /<command> start|stop|cooldown|help
+    description: Start/stop/set cooldown/prepare
+    usage: /<command> start|stop|cooldown|help|prepare
     permission: permission.node
   surround:
-    description: Surround a speedrunner
+    description: Surround a speedrunner with hunters
     usage: /<command> <player>
     permission: permission.node
