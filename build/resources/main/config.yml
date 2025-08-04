@@ -1,0 +1,15 @@
+auto-calibration: true # disable on large servers
+auto-calibration-interval: 10 # recommended to increase this if used on larger servers or even completely disable it, restart server to apply changes
+name-tracking-compass: true
+broadcast-time: true
+broadcast-time-every: 1800 # every 30 mintues it will broadcast remaining time
+
+surround-radius: 3.0 # keep it a decimal/float/double
+
+# Twist Settings
+#
+# Use "SPEEDRUNNER" so only the speedrunner can access the twist
+# Use "HUNTER" so only the hunter can access the twist
+# Use "X" so only the speedrunner can access the twist
+
+pig-drop-op-loot-for: "SPEEDRUNNER"
