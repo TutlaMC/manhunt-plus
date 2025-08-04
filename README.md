@@ -13,6 +13,7 @@
 - `/hunter add|remove <player>` – Add/remove a hunter
 - `/manhunt start` – Start the manhunt
 - `/manhunt stop` – Stop the manhunt
+- `/manhunt list` – Lists all hunters and speedrunners
 - `/compass <player:speedrunner>` – Track a speedrunner
 
 #### 🧪 Extras
@@ -23,6 +24,9 @@
 - `/manhunt countdown <minutes>` – Set a max time limit ⏱️ (**Set to 0 to disable**)
 - `/twist <twist>` – Apply a twist to the manhunt (default is `DEFAULT`)
 - `/manhunt help` – Open the help menu 📖
+- Config:
+  
+
 
 ---
 
@@ -37,8 +41,14 @@
 
 🗂️ Navigate to your server folder → `plugins/ManhuntPlus/config.yml`
 
+- Calibration
+    - `auto-calibration`: Enable/Disable auto compass calibration
+    - `auto-calibration-interval` - Set the interval on which the compass updates. Recommended to increase this if used on larger servers or even completely disable it, restart server to apply changes
+- Broadcasting
+    - `broadcast-time`: true
+    - `broadcast-time-every` - Broadcast time interval(in seconds)
 - `surround-radius: DECIMAL` – Distance between speedrunner and hunters when using `/surround`. Default: `3`
-
+- `name-tracking-compass`: Name the compass to which player its tracking
 ---
 
 ## 🚧 Coming Soon

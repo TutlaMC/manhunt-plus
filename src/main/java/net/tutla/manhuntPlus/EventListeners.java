@@ -1,5 +1,6 @@
 package net.tutla.manhuntPlus;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
@@ -11,8 +12,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.CompassMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -29,10 +33,10 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity();
-        if (ManhuntPlus.getInstance().getSpeedrunners().contains(player)){
+        if (ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(player.getUniqueId())){
             Bukkit.broadcastMessage("Speedrunner "+player.getName()+" has been eliminated");
-            ManhuntPlus.getInstance().removeSpeedrunner(player);
-            if (ManhuntPlus.getInstance().getSpeedrunners().isEmpty()){
+            ManhuntPlus.getInstance().removePlayingSpeedrunner(player);
+            if (ManhuntPlus.getInstance().getPlayingSpeedrunners().isEmpty()){
                 Bukkit.broadcastMessage("§aHunter(s) have won the Manhunt!");
                 ManhuntPlus.getInstance().stopManhunt();
             }
@@ -41,12 +45,12 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntityType() == EntityType.PIG) {
-            if (ManhuntPlus.getInstance().getTwist() != Twist.PIG_OP_LOOT) return;
+            if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.PIG_OP_LOOT) return;
 
             Player killer = event.getEntity().getKiller();
             if (killer == null) return;
 
-            if (!ManhuntPlus.getInstance().getSpeedrunners().contains(killer)) return;
+            if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(killer.getUniqueId())) return;
 
             event.getDrops().clear();
             LootPool pool = ManhuntPlus.getInstance().getDefaultLoot();
@@ -56,7 +60,7 @@ public class EventListeners implements Listener {
                 if (drop != null) event.getDrops().add(drop);
             }
         } else if (event.getEntityType() == EntityType.ENDER_DRAGON) {
-            if (ManhuntPlus.getInstance().getStatus() && !(ManhuntPlus.getInstance().getSpeedrunners().isEmpty())){
+            if (ManhuntPlus.getInstance().getStatus() && !(ManhuntPlus.getInstance().getPlayingSpeedrunners().isEmpty())){
                 Bukkit.broadcastMessage("§aSpeedrunner(s) have won the Manhunt!");
                 ManhuntPlus.getInstance().stopManhunt();
             }
@@ -65,7 +69,7 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         /*
-        if (ManhuntPlus.getInstance().getTwist() != Twist.MILK_HUNTER_OP_LOOT) return;
+        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.MILK_HUNTER_OP_LOOT) return;
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;
@@ -80,7 +84,7 @@ public class EventListeners implements Listener {
 
             NamespacedKey key = new NamespacedKey(ManhuntPlus.getInstance(), "milked_from");
             meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, target.getUniqueId().toString());
-
+            meta.setDisplayName("§b" + target.getName()+ "§e's Milk");
             milk.setItemMeta(meta);
             player.getInventory().addItem(milk);
 
@@ -96,6 +100,32 @@ public class EventListeners implements Listener {
             event.setCancelled(true);
         }
         */
+    }
+
+    public void onRightClick(PlayerInteractEvent event) {
+        if (event.getHand() != EquipmentSlot.HAND) return;
+
+        ItemStack item = event.getItem();
+        if (item == null || item.getType() != Material.COMPASS) return;
+
+        if (!(item.getItemMeta() instanceof CompassMeta meta)) return;
+
+        String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
+        if (id == null) return;
+
+        UUID compassId = UUID.fromString(id);
+        Player target = ManhuntPlus.getInstance().getTrackedCompasses().get(compassId);
+        if (target == null || !target.isOnline()) {
+            event.getPlayer().sendMessage("§cTarget not available.");
+            return;
+        }
+
+        Location loc = target.getLocation();
+        meta.setLodestone(loc);
+        meta.setLodestoneTracked(false);
+        item.setItemMeta(meta);
+
+        event.getPlayer().sendMessage("§aCompass calibrated to " + target.getName());
     }
 
     @EventHandler
@@ -127,11 +157,10 @@ public class EventListeners implements Listener {
 
         Player hitter = (Player) event.getDamager();
         Player victim = (Player) event.getEntity();
-        if (ManhuntPlus.getInstance().getSpeedrunners().contains(hitter) && ManhuntPlus.getInstance().getHunters().contains(victim)){
+        if (ManhuntPlus.getInstance().getSpeedrunners().contains(hitter.getUniqueId()) && ManhuntPlus.getInstance().getHunters().contains(victim.getUniqueId())){
             if (ManhuntPlus.getInstance().waitingForStart){
                 ManhuntPlus.getInstance().startManhunt();
             }
         }
-
     }
 }
