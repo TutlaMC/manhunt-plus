@@ -6,7 +6,7 @@ broadcast-time-every: 1800 # every 30 mintues it will broadcast remaining time
 
 surround-radius: 3.0 # keep it a decimal/float/double
 
-# Twist Settings
+# Twist Settings this is WIP
 #
 # Use "SPEEDRUNNER" so only the speedrunner can access the twist
 # Use "HUNTER" so only the hunter can access the twist
