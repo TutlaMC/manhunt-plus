@@ -523,6 +523,7 @@ public final class ManhuntPlus extends JavaPlugin {
     enum Twist {
         DEFAULT,
         PIG_OP_LOOT,
+        SUSSY
         // MILK_HUNTER_OP_LOOT // not for now cuz of modrinth restrictions
     }
 }

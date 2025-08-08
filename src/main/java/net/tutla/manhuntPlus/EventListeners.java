@@ -171,10 +171,9 @@ public class EventListeners implements Listener {
         if (!event.isSneaking()) return;
 
         Player croucher = event.getPlayer();
+        if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(croucher.getUniqueId())) return;
 
-        List<Player> targets = ManhuntPlus.getInstance().getOpponents(croucher);
-
-        for (Player target : targets) {
+        for (Player target : ManhuntPlus.getInstance().getPlayers(ManhuntPlus.getInstance().getHunters())) {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
             if (croucher.getLocation().distance(target.getLocation()) > 1.5) continue;
 

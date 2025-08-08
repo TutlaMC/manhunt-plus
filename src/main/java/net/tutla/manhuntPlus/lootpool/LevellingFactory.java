@@ -12,7 +12,6 @@ public class LevellingFactory {
 
         tiers.add(new LootTier("basic", createBasicPool()));
         tiers.add(new LootTier("iron", createIronPool()));
-        tiers.add(new LootTier("mid", createMidPool()));
         tiers.add(new LootTier("gold", createGoldPool()));
         tiers.add(new LootTier("diamond", createDiamondPool()));
         tiers.add(new LootTier("enchanted", createEnchantedPool()));
@@ -25,23 +24,24 @@ public class LevellingFactory {
     private static LootPool createBasicPool() {
         LootPool pool = new LootPool();
         pool.addLoot(new ItemStack(Material.WOODEN_SWORD), 0.4);
-        pool.addLoot(new ItemStack(Material.STONE_SWORD), 0.4);
-        pool.addLoot(new ItemStack(Material.COOKED_BEEF, 4), 0.6);
-        pool.addLoot(new ItemStack(Material.BREAD, 4), 0.6);
-        pool.addLoot(new ItemStack(Material.BOW), 0.2);
+        pool.addLoot(new ItemStack(Material.STONE_SWORD), 0.3);
+        pool.addLoot(new ItemStack(Material.WOODEN_AXE), 0.2);
+        pool.addLoot(new ItemStack(Material.STONE_AXE), 0.2);
+        pool.addLoot(new ItemStack(Material.BREAD, 3), 0.6);
+        pool.addLoot(new ItemStack(Material.COOKED_BEEF, 3), 0.5);
+        pool.addLoot(new ItemStack(Material.BIRCH_BOAT, 1), 0.1);
         return pool;
     }
 
     private static LootPool createIronPool() {
         LootPool pool = new LootPool();
         pool.addLoot(new ItemStack(Material.IRON_SWORD), 0.4);
+        pool.addLoot(new ItemStack(Material.IRON_PICKAXE), 0.2);
         pool.addLoot(new ItemStack(Material.IRON_CHESTPLATE), 0.2);
+        pool.addLoot(new ItemStack(Material.IRON_LEGGINGS), 0.2);
         pool.addLoot(new ItemStack(Material.IRON_HELMET), 0.2);
-        return pool;
-    }
-
-    private static LootPool createMidPool() {
-        LootPool pool = new LootPool();
+        pool.addLoot(new ItemStack(Material.IRON_BOOTS), 0.2);
+        pool.addLoot(new ItemStack(Material.IRON_ORE, 4), 0.2);
         pool.addLoot(new ItemStack(Material.FISHING_ROD), 0.3);
         pool.addLoot(new ItemStack(Material.SNOWBALL, 16), 0.5);
         pool.addLoot(new ItemStack(Material.COOKED_PORKCHOP, 4), 0.5);
