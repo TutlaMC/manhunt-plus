@@ -19,6 +19,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CompassMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Random;
@@ -175,10 +176,18 @@ public class EventListeners implements Listener {
 
         for (Player target : targets) {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
-            if (croucher.getLocation().distance(target.getLocation()) > 0.5) continue;
+            if (croucher.getLocation().distance(target.getLocation()) > 1.5) continue;
 
-            ManhuntPlus.giveLootToLeveller(croucher);
+            Vector targetFacing = target.getLocation().getDirection().normalize();
+            Vector toCroucher = croucher.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
+
+            double angle = targetFacing.angle(toCroucher); // in radians
+
+            if (angle <= Math.toRadians(60)) {
+                ManhuntPlus.giveLootToLeveller(croucher);
+            }
         }
+
     }
 
 }
