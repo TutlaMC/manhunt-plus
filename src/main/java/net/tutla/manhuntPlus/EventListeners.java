@@ -183,7 +183,7 @@ public class EventListeners implements Listener {
 
             double angle = targetFacing.angle(toCroucher); // in radians
 
-            if (angle <= Math.toRadians(60)) {
+            if (angle <= Math.toRadians(180)) {
                 ManhuntPlus.giveLootToLeveller(croucher);
             }
         }
