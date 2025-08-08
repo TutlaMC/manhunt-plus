@@ -1,4 +1,4 @@
-package net.tutla.manhuntPlus;
+package net.tutla.manhuntPlus.lootpool;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -67,7 +67,7 @@ public class LootPool {
         return pool;
     }
 
-    private static ItemStack enchant(ItemStack item) {
+    public static ItemStack enchant(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
             meta.addEnchant(Enchantment.PROTECTION, staticRandom.nextInt(4) + 1, true);

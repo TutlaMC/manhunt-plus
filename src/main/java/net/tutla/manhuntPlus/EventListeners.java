@@ -1,8 +1,8 @@
 package net.tutla.manhuntPlus;
 
+import net.tutla.manhuntPlus.lootpool.LootPool;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
 import org.bukkit.Bukkit;
@@ -14,12 +14,13 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CompassMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -163,4 +164,21 @@ public class EventListeners implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onSneak(PlayerToggleSneakEvent event) {
+        if (!event.isSneaking()) return;
+
+        Player croucher = event.getPlayer();
+
+        List<Player> targets = ManhuntPlus.getInstance().getOpponents(croucher);
+
+        for (Player target : targets) {
+            if (!target.getWorld().equals(croucher.getWorld())) continue;
+            if (croucher.getLocation().distance(target.getLocation()) > 0.5) continue;
+
+
+        }
+    }
+
 }

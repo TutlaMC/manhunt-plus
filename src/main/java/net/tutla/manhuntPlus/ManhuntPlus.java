@@ -1,5 +1,8 @@
 package net.tutla.manhuntPlus;
 
+import net.tutla.manhuntPlus.lootpool.LevellingFactory;
+import net.tutla.manhuntPlus.lootpool.LootPool;
+import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,6 +38,26 @@ public final class ManhuntPlus extends JavaPlugin {
     private int countdownLimitMinutes = 0;
     // compass shit
     Map<UUID, Player> trackedCompasses = new HashMap<>();
+
+    // twist shit
+    // ik the code is shit but like im shit at naming
+    public static Map<UUID, LootPoolLevelling> playerLootPoolLevels = new HashMap<>();
+
+    public static LootPoolLevelling addPlayerLevellingLootPool(Player player) {
+        LootPoolLevelling levelling = new LootPoolLevelling(LevellingFactory.createAllTiers(), 1.25);
+        playerLootPoolLevels.put(player.getUniqueId(), levelling);
+        return levelling;
+    }
+
+    public static void giveLootToLeveller(Player player) {
+        LootPoolLevelling pool = playerLootPoolLevels.get(player.getUniqueId());
+        if (pool == null) {
+            pool = addPlayerLevellingLootPool(player);
+        }
+        ItemStack loot = pool.getLoot();
+        player.getInventory().addItem(loot);
+    }
+
 
     // loot defs
     private static LootPool basicLootPool;
@@ -145,6 +168,25 @@ public final class ManhuntPlus extends JavaPlugin {
             return true;
         }
         return false;
+    }
+
+    public List<Player> getOpponents(Player player) {
+        if (hunters.contains(player.getUniqueId())) {
+            return getPlayers(speedrunners);
+        } else if (speedrunners.contains(player.getUniqueId())) {
+            return getPlayers(hunters);
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Player> getPlayers(List<UUID> players){
+        List<Player> e = new ArrayList<>();
+
+        for (UUID p : players){
+            e.add(Bukkit.getPlayer(p));
+        }
+
+        return e;
     }
 
     // utils
