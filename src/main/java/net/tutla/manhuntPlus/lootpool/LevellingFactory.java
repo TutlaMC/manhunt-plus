@@ -43,10 +43,10 @@ public class LevellingFactory {
         pool.addLoot(new ItemStack(Material.IRON_BOOTS), 0.2);
         pool.addLoot(new ItemStack(Material.IRON_ORE, 4), 0.2);
         pool.addLoot(new ItemStack(Material.FISHING_ROD), 0.3);
-        pool.addLoot(new ItemStack(Material.SNOWBALL, 16), 0.5);
         pool.addLoot(new ItemStack(Material.COOKED_PORKCHOP, 4), 0.5);
         pool.addLoot(new ItemStack(Material.FLINT_AND_STEEL), 0.3);
         pool.addLoot(new ItemStack(Material.CROSSBOW), 0.2);
+        pool.addLoot(new ItemStack(Material.ARROW, 16), 0.2);
         return pool;
     }
 
@@ -83,14 +83,30 @@ public class LevellingFactory {
     private static LootPool createNetheritePool() {
         LootPool pool = new LootPool();
         pool.addLoot(new ItemStack(Material.NETHERITE_SWORD), 0.3);
-        pool.addLoot(new ItemStack(Material.NETHERITE_HELMET), 0.3);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_AXE)), 0.2);
+        pool.addLoot(new ItemStack(Material.NETHERITE_HELMET), 0.1);
+        pool.addLoot(new ItemStack(Material.NETHERITE_LEGGINGS), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_BOOTS)), 0.1);
         return pool;
     }
 
     private static LootPool createGodPool() {
         LootPool pool = new LootPool();
-        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_CHESTPLATE)), 0.5);
         pool.addLoot(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE), 0.2);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_SWORD)), 0.3);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_AXE)), 0.2);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_HELMET)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_CHESTPLATE)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_LEGGINGS)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_BOOTS)), 0.1);
+        pool.addLoot(new ItemStack(Material.OBSIDIAN, 4), 0.1);
+        pool.addLoot(new ItemStack(Material.END_CRYSTAL, 4), 0.1);
+        pool.addLoot(new ItemStack(Material.TOTEM_OF_UNDYING, 4), 0.1);
+        pool.addLoot(new ItemStack(Material.FISHING_ROD), 0.3);
+        pool.addLoot(new ItemStack(Material.COOKED_PORKCHOP, 4), 0.2);
+        pool.addLoot(new ItemStack(Material.FLINT_AND_STEEL), 0.3);
+        pool.addLoot(new ItemStack(Material.CROSSBOW), 0.2);
+        pool.addLoot(new ItemStack(Material.ARROW, 16), 0.2);
         return pool;
     }
 }
