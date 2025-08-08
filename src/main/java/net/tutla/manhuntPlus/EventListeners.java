@@ -3,6 +3,7 @@ package net.tutla.manhuntPlus;
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CompassMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
@@ -72,8 +74,8 @@ public class EventListeners implements Listener {
     }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        /*
-        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.MILK_HUNTER_OP_LOOT) return;
+
+        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;
@@ -103,7 +105,7 @@ public class EventListeners implements Listener {
             target.sendMessage("§aYou have been milked!");
             event.setCancelled(true);
         }
-        */
+
     }
 
     public void onRightClick(PlayerInteractEvent event) {
@@ -134,7 +136,6 @@ public class EventListeners implements Listener {
 
     @EventHandler
     public void onPlayerConsume(PlayerItemConsumeEvent event) {
-        /*
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
@@ -151,7 +152,7 @@ public class EventListeners implements Listener {
                     }
                 }
             }
-        }*/
+        }
     }
 
     @EventHandler
@@ -171,6 +172,7 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {
         if (!event.isSneaking()) return;
+        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
 
         Player croucher = event.getPlayer();
         if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(croucher.getUniqueId())) return;
