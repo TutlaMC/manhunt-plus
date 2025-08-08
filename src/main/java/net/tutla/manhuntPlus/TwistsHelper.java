@@ -64,4 +64,18 @@ public class TwistsHelper {
 
         player.sendMessage("§cHalf of your inventory has been cleared!");
     }
+
+    public enum CardinalDirection {
+        NORTH, SOUTH, EAST, WEST
+    }
+
+    public static CardinalDirection getCardinalDirection(Player player) {
+        float yaw = player.getLocation().getYaw();
+        yaw = (yaw % 360 + 360) % 360;
+
+        if (yaw >= 45 && yaw < 135) return CardinalDirection.EAST;
+        if (yaw >= 135 && yaw < 225) return CardinalDirection.SOUTH;
+        if (yaw >= 225 && yaw < 315) return CardinalDirection.WEST;
+        return CardinalDirection.NORTH;
+    }
 }

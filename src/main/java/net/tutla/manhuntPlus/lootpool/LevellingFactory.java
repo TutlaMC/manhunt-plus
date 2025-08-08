@@ -52,22 +52,31 @@ public class LevellingFactory {
 
     private static LootPool createGoldPool() {
         LootPool pool = new LootPool();
-        pool.addLoot(new ItemStack(Material.GOLDEN_SWORD), 0.4);
-        pool.addLoot(new ItemStack(Material.GOLDEN_APPLE), 0.3);
+        pool.addLoot(new ItemStack(Material.GOLDEN_SWORD), 0.3);
+        pool.addLoot(new ItemStack(Material.GOLDEN_AXE), 0.2);
+        pool.addLoot(new ItemStack(Material.GOLDEN_HELMET), 0.1);
+        pool.addLoot(new ItemStack(Material.GOLDEN_CHESTPLATE), 0.1);
+        pool.addLoot(new ItemStack(Material.GOLDEN_LEGGINGS), 0.1);
+        pool.addLoot(new ItemStack(Material.GOLDEN_BOOTS), 0.1);
+        pool.addLoot(new ItemStack(Material.GOLDEN_APPLE), 0.2);
+        pool.addLoot(new ItemStack(Material.GOLD_INGOT, 16), 0.1);
         return pool;
     }
 
     private static LootPool createDiamondPool() {
         LootPool pool = new LootPool();
-        pool.addLoot(new ItemStack(Material.DIAMOND_SWORD), 0.3);
-        pool.addLoot(new ItemStack(Material.DIAMOND_CHESTPLATE), 0.2);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_SWORD)), 0.3);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_AXE)), 0.2);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_HELMET)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_CHESTPLATE)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_LEGGINGS)), 0.1);
+        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_BOOTS)), 0.1);
         return pool;
     }
 
     private static LootPool createEnchantedPool() {
         LootPool pool = new LootPool();
-        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_SWORD)), 0.5);
-        pool.addLoot(LootPool.enchant(new ItemStack(Material.DIAMOND_BOOTS)), 0.4);
+
         return pool;
     }
 

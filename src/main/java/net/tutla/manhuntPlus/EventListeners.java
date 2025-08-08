@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import static net.tutla.manhuntPlus.TwistsHelper.getCardinalDirection;
+
 public class EventListeners implements Listener {
     private static TwistsHelper helper;
 
@@ -175,16 +177,14 @@ public class EventListeners implements Listener {
 
         for (Player target : ManhuntPlus.getInstance().getPlayers(ManhuntPlus.getInstance().getHunters())) {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
-            if (croucher.getLocation().distance(target.getLocation()) > 1.5) continue;
+            if (croucher.getLocation().distance(target.getLocation()) > 0.9) continue;
 
             Vector targetFacing = target.getLocation().getDirection().normalize();
             Vector toCroucher = croucher.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
-
-            double angle = targetFacing.angle(toCroucher); // in radians
-
-            if (angle <= Math.toRadians(180)) {
+            if (getCardinalDirection(croucher) == getCardinalDirection(target)) {
                 ManhuntPlus.giveLootToLeveller(croucher);
             }
+
         }
 
     }
