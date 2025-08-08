@@ -177,7 +177,7 @@ public class EventListeners implements Listener {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
             if (croucher.getLocation().distance(target.getLocation()) > 0.5) continue;
 
-
+            ManhuntPlus.giveLootToLeveller(croucher);
         }
     }
 
