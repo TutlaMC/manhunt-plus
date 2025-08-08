@@ -101,7 +101,7 @@ public class LevellingFactory {
         pool.addLoot(LootPool.enchant(new ItemStack(Material.NETHERITE_BOOTS)), 0.1);
         pool.addLoot(new ItemStack(Material.OBSIDIAN, 4), 0.1);
         pool.addLoot(new ItemStack(Material.END_CRYSTAL, 4), 0.1);
-        pool.addLoot(new ItemStack(Material.TOTEM_OF_UNDYING, 4), 0.1);
+        pool.addLoot(new ItemStack(Material.TOTEM_OF_UNDYING), 0.1);
         pool.addLoot(new ItemStack(Material.FISHING_ROD), 0.3);
         pool.addLoot(new ItemStack(Material.COOKED_PORKCHOP, 4), 0.2);
         pool.addLoot(new ItemStack(Material.FLINT_AND_STEEL), 0.3);
