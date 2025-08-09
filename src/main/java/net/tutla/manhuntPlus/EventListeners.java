@@ -76,8 +76,7 @@ public class EventListeners implements Listener {
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;
-        if (!ManhuntPlus.getInstance().getHunters().contains(target)) return;
-        if (!ManhuntPlus.getInstance().getSpeedrunners().contains(player)) return;
+        if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(player.getUniqueId())) return;
 
         if (player.getInventory().getItemInMainHand().getType() == Material.BUCKET) {
 
