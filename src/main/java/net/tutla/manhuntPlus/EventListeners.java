@@ -1,12 +1,9 @@
 package net.tutla.manhuntPlus;
 
 import net.tutla.manhuntPlus.lootpool.LootPool;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -177,10 +174,12 @@ public class EventListeners implements Listener {
         Player croucher = event.getPlayer();
         if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(croucher.getUniqueId())) return;
 
+
+
         for (Player target : ManhuntPlus.getInstance().getPlayers(ManhuntPlus.getInstance().getHunters())) {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
             if (croucher.getLocation().distance(target.getLocation()) > 0.9) continue;
-
+            target.playSound(target.getLocation(), Sound.ENTITY_GHAST_HURT, 1f, 1f);
             Vector targetFacing = target.getLocation().getDirection().normalize();
             Vector toCroucher = croucher.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
             if (getCardinalDirection(croucher) == getCardinalDirection(target)) {
