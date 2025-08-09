@@ -177,7 +177,7 @@ public class EventListeners implements Listener {
 
         for (Player target : ManhuntPlus.getInstance().getPlayers(ManhuntPlus.getInstance().getHunters())) {
             if (!target.getWorld().equals(croucher.getWorld())) continue;
-            if (croucher.getLocation().distance(target.getLocation()) > 0.9) continue;
+            if (croucher.getLocation().distance(target.getLocation()) > 1.4) continue;
             target.playSound(target.getLocation(), Sound.ENTITY_GHAST_HURT, 1f, 1f);
             Vector targetFacing = target.getLocation().getDirection().normalize();
             Vector toCroucher = croucher.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
