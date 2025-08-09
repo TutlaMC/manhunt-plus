@@ -21,6 +21,13 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public final class ManhuntPlus extends JavaPlugin {
+    enum Twist {
+        DEFAULT,
+        PIG_OP_LOOT,
+        SUSSY,
+        // MILK_HUNTER_OP_LOOT // not for now cuz of modrinth restrictions
+    }
+
     // runtime shit
     private static ManhuntPlus instance;
     private Boolean started = false;
@@ -520,10 +527,5 @@ public final class ManhuntPlus extends JavaPlugin {
         return Collections.emptyList();
     }
 
-    enum Twist {
-        DEFAULT,
-        PIG_OP_LOOT,
-        SUSSY
-        // MILK_HUNTER_OP_LOOT // not for now cuz of modrinth restrictions
-    }
+
 }
