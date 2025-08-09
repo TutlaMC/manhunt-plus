@@ -13,17 +13,16 @@ public class TwistsHelper {
     private static final Random random = new Random();
 
     public void tortureHunter(Player hunter) {
-        int choice = random.nextInt(9);
+        int choice = random.nextInt(8);
         switch (choice) {
             case 0 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 2 * 60 * 20, 4)); // Mining fatigue V
             case 1 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 2 * 60 * 20, 4));     // Blindness V
             case 2 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 60 * 20, 0));       // Levitation 1 min
             case 3 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 4 * 60 * 20, 7));     // Weakness VIII
-            case 4 -> hunter.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 4 * 60 * 20, 7));       // Hunger VIII
-            case 5 -> createSinkhole(hunter);
-            case 6 -> launchToSky(hunter);
-            case 7 -> clearHalfInventory(hunter);
-            case 8 -> hunter.setHealth(10);
+            case 4 -> createSinkhole(hunter);
+            case 5 -> launchToSky(hunter);
+            case 6 -> clearHalfInventory(hunter);
+            case 7 -> hunter.setHealth(10);
         }
         hunter.getWorld().playSound(hunter.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1.0f, 1.0f);
     }
