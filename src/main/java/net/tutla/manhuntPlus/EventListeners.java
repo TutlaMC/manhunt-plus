@@ -69,7 +69,7 @@ public class EventListeners implements Listener {
             }
         }
     }
-    @EventHandler
+    /*@EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 
         if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
@@ -102,30 +102,19 @@ public class EventListeners implements Listener {
             event.setCancelled(true);
         }
 
-    }
+    }*/
 
     public void onRightClick(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) return;
 
         ItemStack item = event.getItem();
         if (item == null || item.getType() != Material.COMPASS) return;
-
         if (!(item.getItemMeta() instanceof CompassMeta meta)) return;
-
         String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
         if (id == null) return;
-
         UUID compassId = UUID.fromString(id);
         Player target = ManhuntPlus.getInstance().getTrackedCompasses().get(compassId);
-        if (target == null || !target.isOnline()) {
-            event.getPlayer().sendMessage("§cTarget not available.");
-            return;
-        }
-
-        Location loc = target.getLocation();
-        meta.setLodestone(loc);
-        meta.setLodestoneTracked(false);
-        item.setItemMeta(meta);
+        ManhuntPlus.updateCompass(item, compassId, target);
 
         event.getPlayer().sendMessage("§aCompass calibrated to " + target.getName());
     }
@@ -165,7 +154,7 @@ public class EventListeners implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {
         if (!event.isSneaking()) return;
         if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
@@ -185,6 +174,6 @@ public class EventListeners implements Listener {
                 ManhuntPlus.giveLootToLeveller(croucher);
             }
         }
-    }
+    }*/
 
 }

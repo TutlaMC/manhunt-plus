@@ -24,7 +24,7 @@ public final class ManhuntPlus extends JavaPlugin {
     enum Twist {
         DEFAULT,
         PIG_OP_LOOT,
-        SUSSY,
+        //SUSSY,
         // MILK_HUNTER_OP_LOOT // not for now cuz of modrinth restrictions
     }
 
@@ -45,6 +45,21 @@ public final class ManhuntPlus extends JavaPlugin {
     private int countdownLimitMinutes = 0;
     // compass shit
     Map<UUID, Player> trackedCompasses = new HashMap<>();
+    public static void updateCompass(ItemStack item, UUID compassId, Player target){
+        if (item == null || item.getType() != Material.COMPASS) return;
+
+        CompassMeta meta = (CompassMeta) item.getItemMeta();
+        if (meta == null) return;
+
+        String id = meta.getPersistentDataContainer().get(COMPASS_ID_KEY, PersistentDataType.STRING);
+        if (id != null && id.equals(compassId.toString())) {
+            if (!target.isSneaking()){
+                meta.setLodestone(target.getLocation());
+                meta.setLodestoneTracked(false);
+                item.setItemMeta(meta);
+            }
+        }
+    }
 
     // twist shit
     // ik the code is shit but like im shit at naming
@@ -255,17 +270,7 @@ public final class ManhuntPlus extends JavaPlugin {
 
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             for (ItemStack item : p.getInventory().getContents()) {
-                                if (item == null || item.getType() != Material.COMPASS) continue;
-
-                                CompassMeta meta = (CompassMeta) item.getItemMeta();
-                                if (meta == null) continue;
-
-                                String id = meta.getPersistentDataContainer().get(COMPASS_ID_KEY, PersistentDataType.STRING);
-                                if (id != null && id.equals(compassId.toString())) {
-                                    meta.setLodestone(target.getLocation());
-                                    meta.setLodestoneTracked(false);
-                                    item.setItemMeta(meta);
-                                }
+                                updateCompass(item, compassId, target);
                             }
                         }
                     }
@@ -283,8 +288,7 @@ public final class ManhuntPlus extends JavaPlugin {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String @NotNull [] args) {
-        if (!(sender instanceof Player)) return false;
-        Player player = (Player) sender;
+        if (!(sender instanceof Player player)) return false;
 
         if (cmd.getName().equalsIgnoreCase("compass")) {
             if (speedrunners.isEmpty()) {
