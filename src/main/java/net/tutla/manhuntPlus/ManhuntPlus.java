@@ -198,12 +198,12 @@ public final class ManhuntPlus extends JavaPlugin {
 
     // utils
     public void giveCompass(Player target, Player player){
-        if (!speedrunners.contains(target.getUniqueId())) {
-            player.sendMessage("§cPlayer is not a speedrunner!");
+        if (!playingSpeedrunners.contains(target.getUniqueId())) {
+            player.sendMessage("§cPlayer is not a playing speedrunner!");
             return;
         }
 
-        if (target != null && target.isOnline()) {
+        if (target.isOnline()) {
             ItemStack compass = new ItemStack(Material.COMPASS);
             CompassMeta meta = (CompassMeta) compass.getItemMeta();
             if (meta != null) {
@@ -221,9 +221,9 @@ public final class ManhuntPlus extends JavaPlugin {
             }
 
             player.getInventory().addItem(compass);
-            player.sendMessage("Tracking compass given for speedrunner " + target.getName());
+            player.sendMessage("§bTracking compass given for speedrunner " + target.getName());
         } else {
-            player.sendMessage("§cPlayer not found or not online");
+            player.sendMessage("§cPlayer is not online");
         }
     }
 
@@ -298,7 +298,11 @@ public final class ManhuntPlus extends JavaPlugin {
             } else {
                 target = Bukkit.getPlayer(speedrunners.getFirst());
             }
-            giveCompass(target, player);
+            if (target != null){
+                giveCompass(target, player);
+            } else {
+                player.sendMessage("§cPlayer not found");
+            }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("speedrunner")){
             if (args.length == 2){

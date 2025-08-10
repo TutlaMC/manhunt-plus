@@ -184,9 +184,7 @@ public class EventListeners implements Listener {
             if (getCardinalDirection(croucher) == getCardinalDirection(target)) {
                 ManhuntPlus.giveLootToLeveller(croucher);
             }
-
         }
-
     }
 
 }
