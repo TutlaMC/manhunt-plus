@@ -104,6 +104,7 @@ public class EventListeners implements Listener {
 
     }*/
 
+    @EventHandler
     public void onRightClick(PlayerInteractEvent event) {
         if (event.getHand() != EquipmentSlot.HAND) return;
 
