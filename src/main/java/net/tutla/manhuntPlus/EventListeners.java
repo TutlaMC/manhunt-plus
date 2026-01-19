@@ -69,10 +69,10 @@ public class EventListeners implements Listener {
             }
         }
     }
-    /*@EventHandler
+    @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 
-        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
+        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.MILK_HUNTER_OP_LOOT) return;
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;
@@ -102,7 +102,7 @@ public class EventListeners implements Listener {
             event.setCancelled(true);
         }
 
-    }*/
+    }
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent event) {
