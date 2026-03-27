@@ -32,12 +32,12 @@ public class ManhuntContext {
         return e;
     }
     public static void addSpeedrunner(Player player){
-        if (!speedrunners.contains((player.getUniqueId()))){
+        if (!isSpeedrunner(player)){
             speedrunners.add(player.getUniqueId());
         }
     }
     public static void removeSpeedrunner(Player player){
-        if (speedrunners.contains((player.getUniqueId()))){
+        if (isSpeedrunner(player)){
             speedrunners.remove(player.getUniqueId());
         }
     }
@@ -63,9 +63,9 @@ public class ManhuntContext {
         }
     }
     public List<Player> getOpponents(Player player) {
-        if (ManhuntContext.getHunters().contains(player.getUniqueId())) {
+        if (isHunter(player)) {
             return getPlayers(ManhuntContext.getSpeedrunners());
-        } else if (ManhuntContext.getSpeedrunners().contains(player.getUniqueId())) {
+        } else if (isSpeedrunner(player)) {
             return getPlayers(ManhuntContext.getHunters());
         }
         return Collections.emptyList();

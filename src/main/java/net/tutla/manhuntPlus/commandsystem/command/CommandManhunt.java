@@ -3,7 +3,6 @@ package net.tutla.manhuntPlus.commandsystem.command;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.manhunt.Manhunt;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
-import net.tutla.manhuntPlus.ManhuntPlus;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
 import net.tutla.manhuntPlus.manhunt.ManhuntTimer;
@@ -49,13 +48,13 @@ public class CommandManhunt extends TutlaCommand {
         System.out.println(Arrays.toString(ctx.args));
         switch (ctx.args[0].toLowerCase()) { // first time i actually used a switch case my whole life (if statements worked well so like it wasn't necessary but like worth trying)
             case "twist" -> {
-                if (ctx.args.length == 1) {
+                if (ctx.args.length == 2) {
                     try {
-                        Twist selected = Twist.valueOf(ctx.args[0].toUpperCase());
+                        Twist selected = Twist.valueOf(ctx.args[1].toUpperCase());
                         Manhunt.setTwist(selected);
                         ctx.player.sendMessage("§aTwist set to: " + selected.name());
                     } catch (IllegalArgumentException e) {
-                        ctx.player.sendMessage("§cUnknown twist: " + ctx.args[0]);
+                        ctx.player.sendMessage("§cUnknown twist: " + ctx.args[1]);
                         ctx.player.sendMessage("§eAvailable twists: " + Arrays.toString(Twist.values()));
                     }
                     return true;

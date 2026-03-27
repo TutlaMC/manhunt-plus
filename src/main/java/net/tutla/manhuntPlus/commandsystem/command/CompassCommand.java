@@ -1,6 +1,8 @@
 package net.tutla.manhuntPlus.commandsystem.command;
 
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
+import net.tutla.manhuntPlus.manhunt.Manhunt;
+import net.tutla.manhuntPlus.manhunt.ManhuntCompass;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.ManhuntPlus;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
@@ -11,7 +13,7 @@ import org.bukkit.entity.Player;
 public class CompassCommand extends TutlaCommand {
     public CompassCommand() {
         super("compass", "/compass <speedrunner>\n - <speedrunner> must be a speedrunner (add one via /manhunt speedrunner add)",
-                new CommandTabAutoComplete("compass", null, "<hunter>"));
+                new CommandTabAutoComplete("compass", null, "<speedrunner>"));
     }
 
     public boolean run(CommandContext ctx) {
@@ -26,8 +28,9 @@ public class CompassCommand extends TutlaCommand {
         } else {
             target = Bukkit.getPlayer(ManhuntContext.getSpeedrunners().getFirst());
         }
+
         if (target != null){
-            ManhuntPlus.getInstance().giveCompass(target, ctx.player);
+            ManhuntCompass.giveCompass(target, ctx.player);
         } else {
             ctx.player.sendMessage("§cPlayer not found");
         }

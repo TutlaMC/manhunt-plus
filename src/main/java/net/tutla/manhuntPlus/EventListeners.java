@@ -2,6 +2,7 @@ package net.tutla.manhuntPlus;
 
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.manhunt.Manhunt;
+import net.tutla.manhuntPlus.manhunt.ManhuntCompass;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.manhunt.Twist;
 import org.bukkit.*;
@@ -112,8 +113,8 @@ public class EventListeners implements Listener {
         String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
         if (id == null) return;
         UUID compassId = UUID.fromString(id);
-        Player target = ManhuntPlus.getInstance().getTrackedCompasses().get(compassId);
-        ManhuntPlus.updateCompass(item, compassId, target);
+        Player target = ManhuntCompass.getTrackedCompasses().get(compassId);
+        ManhuntCompass.updateCompass(item, compassId, target);
 
         event.getPlayer().sendMessage("§aCompass calibrated to " + target.getName());
     }
