@@ -9,8 +9,8 @@
 ### 🕹️ Commands
 
 #### 🧍 Basic Setup
-- `/speedrunner add|remove <player>` – Add/remove a speedrunner
-- `/hunter add|remove <player>` – Add/remove a hunter
+- `/manhunt speedrunner add|remove <player>` – Add/remove a speedrunner
+- `/manhunt hunter add|remove <player>` – Add/remove a hunter
 - `/manhunt start` – Start the manhunt
 - `/manhunt stop` – Stop the manhunt
 - `/manhunt list` – Lists all hunters and speedrunners
@@ -22,7 +22,7 @@
 
 #### ⚙️ Settings
 - `/manhunt countdown <minutes>` – Set a max time limit ⏱️ (**Set to 0 to disable**)
-- `/twist <twist>` – Apply a twist to the manhunt (default is `DEFAULT`)
+- `/manhunt twist <twist>` – Apply a twist to the manhunt (default is `DEFAULT`)
 - `/manhunt help` – Open the help menu 📖
 - Config:
   

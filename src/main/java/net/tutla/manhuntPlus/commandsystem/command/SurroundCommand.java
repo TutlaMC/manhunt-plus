@@ -1,5 +1,6 @@
 package net.tutla.manhuntPlus.commandsystem.command;
 
+import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.manhunt.Manhunt;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class SurroundCommand extends TutlaCommand {
     public SurroundCommand(){
         super("surround",
-                "/surround <player> - This command surrounds a target player with hunters. Add hunters (via /manhunt hunter add) to use",
+                "/surround <player>","Surround speedrunner with hunters. Add hunters (via /manhunt hunter add) to use", CommandSection.SETUP,
                 new CommandTabAutoComplete("surround", null, "<player>")
         );
     }

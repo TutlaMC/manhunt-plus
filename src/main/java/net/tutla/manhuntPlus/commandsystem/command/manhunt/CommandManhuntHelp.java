@@ -1,0 +1,83 @@
+package net.tutla.manhuntPlus.commandsystem.command.manhunt;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.tutla.manhuntPlus.commandsystem.CommandContext;
+import net.tutla.manhuntPlus.commandsystem.CommandSection;
+import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
+import net.tutla.manhuntPlus.util.TextUtil;
+
+import java.util.List;
+
+public class CommandManhuntHelp extends TutlaCommand {
+    public static Component helpString;
+
+    public CommandManhuntHelp() {
+        super("help", "/manhunt help", "Show the help menu", CommandSection.NONE, null);
+    }
+
+    @Override
+    public boolean run(CommandContext ctx) {
+        ctx.player.sendMessage(helpString);
+        return true;
+    }
+
+    public static void generateHelpString(List<TutlaCommand> commands) {
+        Component body = Component.empty();
+
+        for (CommandSection section : CommandSection.values()) {
+            if (section == CommandSection.NONE) continue;
+
+            List<TutlaCommand> sectionCmds = commands.stream()
+                    .filter(cmd -> cmd.getSection() == section)
+                    .filter(cmd -> cmd.getHelpString() != null && cmd.getDescription() != null)
+                    .toList();
+
+            if (sectionCmds.isEmpty()) continue;
+
+            body = body.append(TextUtil.parse("\n<yellow><bold>── " + section.name().charAt(0) + section.name().substring(1).toLowerCase() + " ──</bold></yellow>\n"));
+
+            for (TutlaCommand cmd : sectionCmds) {
+                body = body.append(generateHelpStringForCommand(cmd));
+            }
+        }
+
+        Component header = TextUtil.parse(
+                "<gold><bold>🧭 Manhunt+</bold></gold>\n" +
+                        "<gray>A powerful manhunt plugin with compass tracking, twists & full hunt control.</gray>"
+        );
+
+        Component footer = TextUtil.parse("""
+
+<yellow><bold>── Twists ──</bold></yellow>
+<aqua>DEFAULT</aqua> <gray>– Standard manhunt rules</gray>
+<aqua>PIG_OP_LOOT</aqua> <gray>– Pigs drop OP loot for speedrunner 🐷</gray>
+
+<yellow><bold>── Links ──</bold></yellow>
+<click:open_url:'https://modrinth.com/plugin/manhunt+'><aqua><bold>📦 Modrinth</bold></aqua></click> <gray>|</gray> \
+<click:open_url:'https://discord.tutla.net'><aqua><bold>💬 Discord</bold></aqua></click> <gray>|</gray> \
+<click:open_url:'https://github.com/TutlaMC/manhunt-plus'><aqua><bold>⭐ GitHub</bold></aqua></click> <gray>|</gray> \
+<click:open_url:'https://wiki.tutla.net/manhunt+'><aqua><bold>🌐 Wiki</bold></aqua></click>
+""");
+
+        helpString = header.append(body).append(footer);
+    }
+
+    private static Component generateHelpStringForCommand(TutlaCommand cmd) {
+        Component description = TextUtil.parse(cmd.getDescription());
+        Component helpText = TextUtil.parse(cmd.getHelpString());
+
+        return Component.empty()
+                .append(
+                        helpText
+                                .color(NamedTextColor.GREEN)
+                                .clickEvent(ClickEvent.suggestCommand(cmd.getHelpString()))
+                                .hoverEvent(HoverEvent.showText(description))
+                )
+                .append(TextUtil.parse(" <gray>– </gray>"))
+                .append(description)
+                .append(Component.newline());
+    }
+}

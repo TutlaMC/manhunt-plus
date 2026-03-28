@@ -54,10 +54,15 @@ public class CommandSystem {
 
         if (complete.childAutoCompletes != null) {
             for (CommandTabAutoComplete child : complete.childAutoCompletes) {
+                if (child == null) continue;
                 if (child.name.equalsIgnoreCase(ctx.args[cidx])) {
                     return getAutoComplete(child, ctx, cidx + 1);
                 }
             }
+        }
+
+        if (complete.value != null && !complete.value.equals("<values>")) {
+            return getAutoComplete(complete, ctx, cidx + 1);
         }
 
         return null;
@@ -70,6 +75,7 @@ public class CommandSystem {
 
         switch (autocomplete.value) {
             case "<values>" -> {
+                if (autocomplete.values == null) return Collections.emptyList();
                 return autocomplete.values.stream()
                         .filter(s -> s.startsWith(arg.toLowerCase()))
                         .toList();
