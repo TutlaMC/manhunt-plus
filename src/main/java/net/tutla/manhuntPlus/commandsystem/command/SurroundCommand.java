@@ -7,6 +7,7 @@ import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.ManhuntPlus;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
+import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,7 +23,7 @@ public class SurroundCommand extends TutlaCommand {
     @Override
     public boolean run(CommandContext ctx) {
         if (ManhuntContext.getSpeedrunners().isEmpty()) {
-            ctx.player.sendMessage("§cNo speedrunner set.");
+            ctx.player.sendMessage(TextUtil.parse("<bold><red>Cannot surround player without there being any speedrunners present.</red> Add one with /manhunt speedrunner add"));
             return true;
         }
 
@@ -30,7 +31,7 @@ public class SurroundCommand extends TutlaCommand {
             Player target = Bukkit.getPlayer(ctx.args[0]);
             if (target != null && target.isOnline()) {
                 if (!ManhuntContext.getSpeedrunners().contains(target.getUniqueId())) {
-                    ctx.player.sendMessage("§cPlayer is not a speedrunner!");
+                    ctx.player.sendMessage(TextUtil.parse("<red>Player is not a speedrunner!</red>"));
                     return true;
                 }
 
@@ -49,9 +50,9 @@ public class SurroundCommand extends TutlaCommand {
                     newLoc.setDirection(center.toVector().subtract(newLoc.toVector())); // face center
                     p.teleport(newLoc);
                 }
-                ctx.player.sendMessage("§aSurrounded  "+target.getName());
+                ctx.player.sendMessage(TextUtil.parse("<green>Surrounded  "+target.getName()+"</green>"));
             } else {
-                ctx.player.sendMessage("§cPlayer not found or not online");
+                ctx.player.sendMessage(TextUtil.parse("<red>Player not found or not online</red>"));
             }
 
             return true;

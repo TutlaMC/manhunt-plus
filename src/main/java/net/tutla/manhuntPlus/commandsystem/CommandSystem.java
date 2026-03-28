@@ -3,6 +3,7 @@ package net.tutla.manhuntPlus.commandsystem;
 import net.tutla.manhuntPlus.commandsystem.command.CommandManhunt;
 import net.tutla.manhuntPlus.commandsystem.command.CompassCommand;
 import net.tutla.manhuntPlus.commandsystem.command.SurroundCommand;
+import net.tutla.manhuntPlus.commandsystem.command.manhunt.CommandManhuntHelp;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,11 +15,18 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class CommandSystem {
+    private final CommandManhunt manhuntCommand = new CommandManhunt();
     private final List<TutlaCommand> commands = List.of(
             new CompassCommand(),
-            new CommandManhunt(),
+            manhuntCommand,
             new SurroundCommand()
     );
+
+    public void initialise() {
+        List<TutlaCommand> toPut = new ArrayList<>(manhuntCommand.getSubcommands());
+        toPut.addAll(commands);
+        CommandManhuntHelp.generateHelpString(toPut);
+    }
 
     public boolean execute(CommandContext cmdParams){
         for (TutlaCommand command : commands){

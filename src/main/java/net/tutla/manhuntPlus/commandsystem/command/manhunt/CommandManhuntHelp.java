@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
+import net.tutla.manhuntPlus.manhunt.Twist;
 import net.tutla.manhuntPlus.util.TextUtil;
 
 import java.util.List;
@@ -49,11 +50,15 @@ public class CommandManhuntHelp extends TutlaCommand {
                         "<gray>A powerful manhunt plugin with compass tracking, twists & full hunt control.</gray>"
         );
 
-        Component footer = TextUtil.parse("""
+        Component twists = TextUtil.parse("""
 
 <yellow><bold>── Twists ──</bold></yellow>
-<aqua>DEFAULT</aqua> <gray>– Standard manhunt rules</gray>
-<aqua>PIG_OP_LOOT</aqua> <gray>– Pigs drop OP loot for speedrunner 🐷</gray>
+
+""");
+        for (Twist twist : Twist.values()){
+            twists = twists.append(TextUtil.parse("<aqua>"+twist.label+"</aqua> <gray>– "+twist.description+"</gray>\n"));
+        }
+        Component footer = TextUtil.parse("""
 
 <yellow><bold>── Links ──</bold></yellow>
 <click:open_url:'https://modrinth.com/plugin/manhunt+'><aqua><bold>📦 Modrinth</bold></aqua></click> <gray>|</gray> \
@@ -62,7 +67,7 @@ public class CommandManhuntHelp extends TutlaCommand {
 <click:open_url:'https://wiki.tutla.net/manhunt+'><aqua><bold>🌐 Wiki</bold></aqua></click>
 """);
 
-        helpString = header.append(body).append(footer);
+        helpString = header.append(body).append(twists).append(footer);
     }
 
     private static Component generateHelpStringForCommand(TutlaCommand cmd) {

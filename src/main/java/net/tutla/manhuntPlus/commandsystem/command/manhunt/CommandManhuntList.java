@@ -4,6 +4,7 @@ import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
+import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
@@ -25,9 +26,9 @@ public class CommandManhuntList extends TutlaCommand {
         toGet.put("Playing Speedrunners", ManhuntContext.getPlayingSpeedrunners());
 
         toGet.forEach((String name, List<UUID> list) -> {
-            ctx.player.sendMessage("§e"+name+":");
+            ctx.player.sendMessage(TextUtil.parse("<yellow><bold>"+name+":</reset>"));
             for (UUID id : list) {
-                ctx.player.sendMessage(Objects.requireNonNull(Bukkit.getPlayer(id)).getName());
+                ctx.player.sendMessage(" - "+Objects.requireNonNull(Bukkit.getPlayer(id)).getName());
             }
         });
         return true;

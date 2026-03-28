@@ -9,6 +9,7 @@ import net.tutla.manhuntPlus.ManhuntPlus;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
 import net.tutla.manhuntPlus.util.TextUtil;
+import net.tutla.manhuntPlus.util.TutlaUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -20,7 +21,7 @@ public class CompassCommand extends TutlaCommand {
 
     public boolean run(CommandContext ctx) {
         if (ManhuntContext.getSpeedrunners().isEmpty()) {
-            ctx.player.sendMessage("§cThere are no speedrunners! Add them with /manhunt speedrunner add <player>");
+            ctx.player.sendMessage(TextUtil.parse("<bold><red>There are no speedrunners!</red> Add them with /manhunt speedrunner add <player></bold>"));
             return true;
         }
 
@@ -31,10 +32,10 @@ public class CompassCommand extends TutlaCommand {
             target = Bukkit.getPlayer(ManhuntContext.getSpeedrunners().getFirst());
         }
 
-        if (target != null){
+        if (TutlaUtil.isTargetValid(target)){
             ManhuntCompass.giveCompass(target, ctx.player);
         } else {
-            ctx.player.sendMessage("§cPlayer not found");
+            ctx.player.sendMessage(TextUtil.parse("<red>Player not found</red>"));
         }
         return true;
     }

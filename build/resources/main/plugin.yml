@@ -13,12 +13,9 @@ permissions:
 commands:
   compass:
     description: Gives a tracking compass
-    usage: /<command> <player>
   manhunt:
     description: Start/stop/set cooldown/prepare
-    usage: /<command> hunter|speedrunner|start|stop|help|cooldown|prepare|list|twist
     permission: permission.node
   surround:
     description: Surround a speedrunner with hunters
-    usage: /<command> <player>
     permission: permission.node
