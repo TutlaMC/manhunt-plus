@@ -17,7 +17,7 @@ public abstract class TutlaCommand {
     private final CommandSection section;
     public final CommandTabAutoComplete autocomplete;
 
-    public TutlaCommand(String name, String help, String description, CommandSection section, CommandTabAutoComplete autocomplete) {
+    public TutlaCommand(String name, String help, String description, CommandSection section, CommandTabAutoComplete autocomplete) { // TODO: make all these params a class
         this.name = name;
         this.help = help;
         this.description = description;

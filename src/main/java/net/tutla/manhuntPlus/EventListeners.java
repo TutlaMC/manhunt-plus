@@ -5,6 +5,7 @@ import net.tutla.manhuntPlus.manhunt.Manhunt;
 import net.tutla.manhuntPlus.manhunt.ManhuntCompass;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.manhunt.Twist;
+import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
@@ -36,7 +37,6 @@ public class EventListeners implements Listener {
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity();
         if (ManhuntContext.getPlayingSpeedrunners().contains(player.getUniqueId())){
-            Bukkit.broadcastMessage("Speedrunner "+player.getName()+" has been eliminated");
             ManhuntContext.removePlayingSpeedrunner(player);
             if (ManhuntContext.getPlayingSpeedrunners().isEmpty()){
                 Bukkit.broadcastMessage("§aHunter(s) have won the Manhunt!");
@@ -110,13 +110,25 @@ public class EventListeners implements Listener {
         ItemStack item = event.getItem();
         if (item == null || item.getType() != Material.COMPASS) return;
         if (!(item.getItemMeta() instanceof CompassMeta meta)) return;
-        String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
-        if (id == null) return;
-        UUID compassId = UUID.fromString(id);
-        Player target = ManhuntCompass.getTrackedCompasses().get(compassId);
-        ManhuntCompass.updateCompass(item, compassId, target);
 
-        event.getPlayer().sendMessage("§aCompass calibrated to " + target.getName());
+        String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
+        if (id == null) return; // not a manhunt compass
+
+        UUID compassId = UUID.fromString(id);
+        Player target = ManhuntCompass.getTarget(compassId);
+
+        if (target == null) {
+            event.getPlayer().sendMessage(TextUtil.parse("<red>Tracked player is offline or no longer being tracked.</red>"));
+            return;
+        }
+
+        if (!target.isOnline()) {
+            event.getPlayer().sendMessage(TextUtil.parse("<yellow>" + target.getName() + " is offline.</yellow>"));
+            return;
+        }
+
+        ManhuntCompass.updateCompass(item, compassId, event.getPlayer(), target);
+        event.getPlayer().sendMessage(TextUtil.parse("<green>Compass calibrated to <white>" + target.getName() + "</white>.</green>"));
     }
 
     @EventHandler

@@ -44,6 +44,7 @@ public class Manhunt {
             setStatus(false);
             ManhuntTimer.stopTimer();
             ManhuntContext.getPlayingSpeedrunners().clear();
+            ManhuntCompass.clearAllCompassData();
             Bukkit.broadcastMessage("§aManhunt stopped!");
             return true;
         }

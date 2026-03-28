@@ -9,9 +9,9 @@ import net.tutla.manhuntPlus.manhunt.ManhuntTimer;
 import java.util.List;
 
 public class CommandManhuntCountdown extends TutlaCommand  {
-    private static String usage = "/manhunt cooldown <minutes>";
+    private static String usage = "/manhunt countdown <minutes>";
     public CommandManhuntCountdown(){
-        super("cooldown", usage, "Set time limit (0 to disable)", CommandSection.SETTINGS,
+        super("countdown", usage, "Set time limit (0 to disable)", CommandSection.SETTINGS,
                 new CommandTabAutoComplete("countdown", null, "<values>")
                         .setValues(List.of("0", "5", "10", "15", "30"))
         );
