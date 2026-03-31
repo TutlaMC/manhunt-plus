@@ -1,10 +1,7 @@
 package net.tutla.manhuntPlus;
 
 import net.tutla.manhuntPlus.lootpool.LootPool;
-import net.tutla.manhuntPlus.manhunt.Manhunt;
-import net.tutla.manhuntPlus.manhunt.ManhuntCompass;
-import net.tutla.manhuntPlus.manhunt.ManhuntContext;
-import net.tutla.manhuntPlus.manhunt.Twist;
+import net.tutla.manhuntPlus.manhunt.*;
 import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
@@ -22,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.CompassMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.event.player.PlayerPortalEvent;
 
 import java.util.Random;
 import java.util.UUID;
@@ -111,6 +109,7 @@ public class EventListeners implements Listener {
         if (item == null || item.getType() != Material.COMPASS) return;
         if (!(item.getItemMeta() instanceof CompassMeta meta)) return;
 
+        System.out.println("rc");
         String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
         if (id == null) return; // not a manhunt compass
 
@@ -166,26 +165,35 @@ public class EventListeners implements Listener {
         }
     }
 
-    /*@EventHandler
-    public void onSneak(PlayerToggleSneakEvent event) {
-        if (!event.isSneaking()) return;
-        if (ManhuntPlus.getInstance().getTwist() != ManhuntPlus.Twist.SUSSY) return;
+    /* let git tell history */
 
-        Player croucher = event.getPlayer();
-        if (!ManhuntPlus.getInstance().getPlayingSpeedrunners().contains(croucher.getUniqueId())) return;
+    @EventHandler
+    public void onPortalEnter(PlayerPortalEvent event){
+        if (event.getTo().getWorld() == null) return;
 
+        UUID p = event.getPlayer().getUniqueId();
+        PortalInfo info = ManhuntCompass.getPlayerPortalInfo(p);
 
-
-        for (Player target : ManhuntPlus.getInstance().getPlayers(ManhuntPlus.getInstance().getHunters())) {
-            if (!target.getWorld().equals(croucher.getWorld())) continue;
-            if (croucher.getLocation().distance(target.getLocation()) > 1.4) continue;
-            target.playSound(target.getLocation(), Sound.ENTITY_GHAST_HURT, 1f, 1f);
-            Vector targetFacing = target.getLocation().getDirection().normalize();
-            Vector toCroucher = croucher.getLocation().toVector().subtract(target.getLocation().toVector()).normalize();
-            if (getCardinalDirection(croucher) == getCardinalDirection(target)) {
-                ManhuntPlus.giveLootToLeveller(croucher);
-            }
+        if (info == null){
+            info = new PortalInfo();
         }
-    }*/
 
+        switch (event.getTo().getWorld().getEnvironment()){ // based on destination, get prev dimensions place
+            case NETHER -> {
+                info.overworldToNetherPortal = event.getFrom();
+            }
+            case NORMAL -> {
+                if (event.getFrom().getWorld().getEnvironment() == World.Environment.NETHER){
+                    info.netherToOverworldPortal = event.getFrom();
+                } else {
+                    info.endToOverworldPortal = event.getFrom();
+                }
+            }
+            case THE_END -> {
+                info.overworldToEndPortal = event.getFrom();
+            }
+
+        }
+        ManhuntCompass.setPlayerPortalInfo(p, info);
+    }
 }

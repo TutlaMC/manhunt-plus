@@ -6,6 +6,7 @@ import net.tutla.manhuntPlus.util.TutlaUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -20,6 +21,7 @@ import java.util.UUID;
 
 public class ManhuntCompass {
     public static Map<UUID, UUID> trackedCompasses = new HashMap<>(); // compassId -> targetUUID
+    private static Map<UUID, PortalInfo> playerPortalInfo = new HashMap<>();
 
     public static void giveCompass(Player target, Player player) {
         if (!ManhuntContext.getPlayingSpeedrunners().contains(target.getUniqueId())) {
@@ -79,13 +81,13 @@ public class ManhuntCompass {
         meta.setLodestoneTracked(false);
         item.setItemMeta(meta);
 
-        if (!hunter.getWorld().getName().equals(target.getWorld().getName())) {
+
+        if (!hunter.getWorld().getEnvironment().equals(target.getWorld().getEnvironment())) {
             String targetDim = switch (target.getWorld().getEnvironment()) {
                 case NETHER -> "the Nether";
                 case THE_END -> "the End";
                 default -> "the Overworld";
             };
-            System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeee");
             hunter.sendActionBar(TextUtil.parse(
                     "<gray>" + target.getName() + " is in <white>" + targetDim + "</white> – pointing to portal</gray>"
             ));
@@ -107,51 +109,36 @@ public class ManhuntCompass {
     }
 
     public static Location getTrackingLocation(Player hunter, Player target) {
-        String hunterWorld = hunter.getWorld().getEnvironment().name();
-        String targetWorld = target.getWorld().getEnvironment().name();
+        World.Environment hunterWorld = hunter.getWorld().getEnvironment();
+        World.Environment targetWorld = target.getWorld().getEnvironment();
 
-        if (hunter.getWorld().equals(target.getWorld())) {
+        if (hunter.getWorld().getEnvironment().equals(target.getWorld().getEnvironment())) {
             return target.getLocation(); // same dimension, track directly
         }
-
-        return switch (targetWorld) {
-            case "NETHER" -> // target is in nether, hunter is in overworld — point to nether portal
-                    findNearestNetherPortal(hunter);
-            case "THE_END" -> // target is in end — point to stronghold/end portal
-                    findStronghold(hunter);
-            default -> // target is in overworld, hunter is in nether — point to their nether portal
-                    findNearestNetherPortal(hunter);
-        };
-    }
-
-    private static Location findNearestNetherPortal(Player player) {
-        // Search in a radius for nether portal blocks
-        Location loc = player.getLocation();
-        int radius = 128;
-
-        for (int x = -radius; x <= radius; x += 4) {
-            for (int y = 0; y <= 256; y += 4) {
-                for (int z = -radius; z <= radius; z += 4) {
-                    Location check = loc.clone().add(x, y - loc.getBlockY(), z);
-                    if (check.getBlock().getType() == Material.NETHER_PORTAL) {
-                        return check;
-                    }
+        PortalInfo info = getPlayerPortalInfo(target.getUniqueId());
+        if (info == null) return target.getLocation();
+        switch (hunterWorld){
+            case NORMAL -> {
+                if (targetWorld == World.Environment.THE_END){
+                    return info.overworldToEndPortal;
+                } else {
+                    return info.overworldToNetherPortal;
                 }
             }
+            case NETHER -> {
+                return info.netherToOverworldPortal;
+            }
+            default -> {
+                return info.endToOverworldPortal;
+            }
         }
-
-        return null; // no portal found nearby
     }
 
-    private static Location findStronghold(Player player) {
-        // Use locate to find nearest stronghold
-        Location loc = player.getLocation();
-        var stronghold = player.getWorld().locateNearestStructure(
-                loc,
-                org.bukkit.generator.structure.Structure.STRONGHOLD,
-                100,
-                false
-        );
-        return stronghold != null ? stronghold.getLocation() : null;
+    public static PortalInfo getPlayerPortalInfo(UUID id){
+        return playerPortalInfo.get(id);
+    }
+
+    public static void setPlayerPortalInfo(UUID player, PortalInfo info){
+        playerPortalInfo.put(player, info);
     }
 }
