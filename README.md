@@ -1,13 +1,13 @@
 # 🧭 Manhunt+
 
-**Manhunt+** is a powerful Minecraft manhunt plugin featuring compass tracking, exciting twists, and full control over the hunt!
+**Manhunt+** is a powerful Minecraft manhunt plugin featuring compass tracking across dimensions, twists, and full control over the hunt!
 
 ---
 
 ## ⚙️ Features & Usage
 
 - ⚡ Easy and fast setup
-- 🧭 Compass tracking across all dimensions
+- 🧭 Compass tracking across all dimensions (points toward portals)
 - 🌀 Enrich the game with twists
 - 🛠️ Create your own twists *(coming soon!)*
 
