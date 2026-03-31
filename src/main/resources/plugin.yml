@@ -1,12 +1,12 @@
 name: ManhuntPlus
-version: '1.3'
+version: '1.3.2.7'
 main: net.tutla.manhuntPlus.ManhuntPlus
 api-version: '1.21'
 authors: [ TutlaMC ]
 website: https://tutla.net
 permissions:
   permission.node:
-    description: "This is a permission node"
+    description: "Tutla Permission Node"
     default: op
     children:
       permission.node.child: true

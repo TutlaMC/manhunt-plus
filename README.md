@@ -6,6 +6,11 @@
 
 ## ⚙️ Features & Usage
 
+- ⚡ Easy and fast setup
+- 🧭 Compass tracking across all dimensions
+- 🌀 Enrich the game with twists
+- 🛠️ Create your own twists *(coming soon!)*
+
 ### 🕹️ Commands
 
 #### 🧍 Basic Setup
@@ -69,5 +74,5 @@ Think we’re missing something? **Contribute on [GitHub](https://github.com/Tut
 
 ## 🧪 Other Tutla Studio Projects
 
-- 🛡️ [**HardPlayers**](https://modrinth.com/mod/hardplayers) – Practice PvP with custom players
-- 🧾 [**Cheat Recipes**](https://modrinth.com/datapack/cheat_recipes) – Instantly get any item with custom recipes  
+- 🛡️ [**LeaveBind!**](https://modrinth.com/mod/leavebind) – Leave the server with a click of a button
+- 🧾 [**Leave This, GoBack!**](https://modrinth.com/mod/leave-this-go-back) – Pressing on a slot twice returns you back to the previous slot. Useful for attribute swapping / quick tool swapping / mace pvp 
