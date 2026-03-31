@@ -2,6 +2,7 @@ package net.tutla.manhuntPlus;
 
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.manhunt.*;
+import net.tutla.manhuntPlus.twist.TwistsHelper;
 import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;

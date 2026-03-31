@@ -1,4 +1,4 @@
-package net.tutla.manhuntPlus;
+package net.tutla.manhuntPlus.twist;
 
 import org.bukkit.*;
 import org.bukkit.entity.Player;

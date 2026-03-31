@@ -6,6 +6,7 @@ import net.tutla.manhuntPlus.lootpool.LevellingFactory;
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
 import net.tutla.manhuntPlus.manhunt.*;
+import net.tutla.manhuntPlus.twist.TwistsHelper;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
