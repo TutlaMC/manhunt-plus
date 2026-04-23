@@ -42,8 +42,13 @@ public class TwistRegister{
             if (ctx.cause == null) return;
             cause = ctx.cause;
 
-            List<ItemStack> items = LootPoolManager.getDefaultLoot().getSomeLoot(64);// TODO: make count within lootpool
-            cause.give(items);
+            ctx.twist.lootForPlayer(cause, 2);
+        });
+    }
+
+    public static void resetAllTwistLootPools(){
+        twists.forEach((name, twist)->{
+            twist.resetLootPool();
         });
     }
 

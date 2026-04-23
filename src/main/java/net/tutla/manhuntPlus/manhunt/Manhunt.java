@@ -40,6 +40,7 @@ public class Manhunt {
         waitingForStart = false;
         if (!started) {
             Manhunt.setStatus(true);
+            TwistRegister.resetAllTwistLootPools();
             ManhuntTimer.startTimer();
             Bukkit.broadcastMessage("§aManhunt started!");
             ManhuntContext.getPlayingSpeedrunners().addAll(ManhuntContext.getSpeedrunners());

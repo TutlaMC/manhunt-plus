@@ -32,6 +32,6 @@ public class TierBuilder {
     }
 
     public LootPoolLevelling build(String name, double difficultyMultiplier) {
-        return new LootPoolLevelling(name, tiers, difficultyMultiplier);
+        return new LootPoolLevelling(name, new ArrayList<>(tiers), difficultyMultiplier);
     }
 }

@@ -17,7 +17,8 @@ public class CommandLootPoolComplete extends TutlaCommand  {
     @Override
     public boolean run(CommandContext ctx){
         UninitalisedLootPool uninitalisedLootPool = LootPoolManager.getUninitialisedLootPool();
-        LootPoolManager.addLootPool(new LootPoolLevelling(uninitalisedLootPool.id, uninitalisedLootPool.getTiers(), uninitalisedLootPool.getDifficultyMultiplier()));
+        LootPoolManager.addLootPool(uninitalisedLootPool);
+        LootPoolManager.setUninitialisedLootPool(null);
         ctx.player.sendMessage(TextUtil.parse("<green>LootPool:</green> Completed Creating Lootpool "+ctx.args[1]));
         return true;
     }

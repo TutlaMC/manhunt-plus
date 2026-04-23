@@ -1,21 +1,25 @@
 package net.tutla.manhuntPlus.twist;
 
+import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
-import net.tutla.manhuntPlus.lootpool.LootPoolMapping;
+import net.tutla.manhuntPlus.lootpool.LootPoolManager;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class Twist {
-    // TODO: fix private/public naming
     public String identifier;
     public String label;
     public String description;
     public boolean isActive;
 
 
-    public boolean configurable = true; // TODO: Make ever configuring command change this.
+    public boolean configurable = true;
     public boolean defaultTwist = false;
 
     public TwistTrigger trigger = TwistTrigger.NONE;
@@ -25,7 +29,8 @@ public class Twist {
     public TwistAction responseAction;
     public TwistActionResponseTo responseTo;
 
-    public LootPoolLevelling lootpool; //  TODO: work on lootpool
+    public String lootpool = "default";
+    private HashMap<UUID, LootPoolLevelling> playerLootPoolLevellerMapping = new HashMap<>();
 
     public TwistAppliesTo settings = TwistAppliesTo.BOTH;
 
@@ -34,6 +39,44 @@ public class Twist {
         this.description = description;
         this.identifier = identifier;
     }
+
+    // lootpool
+
+    public void setLootpool(String lootpool){
+        this.lootpool = lootpool;
+    }
+
+    public LootPoolLevelling generateLootPool(){
+        return LootPoolManager.getLevelling(lootpool).generate();
+    }
+
+    public HashMap<UUID, LootPoolLevelling> getPlayerLootPoolLevellerMapping(){
+        return playerLootPoolLevellerMapping;
+    }
+
+    public void resetLootPool(){
+        this.playerLootPoolLevellerMapping = new HashMap<>();
+    }
+
+    public void lootForPlayer(Player player, int count){
+        if (lootpool.equals("default")){
+            LootPool pool = LootPoolManager.getDefaultLoot();
+            player.give(pool.getSomeLoot(count));
+        } else {
+            player.give(lootPoolLevellingForPlayer(player.getUniqueId()).getLoot());
+        }
+    }
+
+    public LootPoolLevelling lootPoolLevellingForPlayer(UUID uuid){
+        LootPoolLevelling lvlr = playerLootPoolLevellerMapping.get(uuid);
+        if (lvlr == null) {
+            lvlr = generateLootPool();
+            playerLootPoolLevellerMapping.put(uuid, lvlr);
+        }
+        return lvlr;
+    }
+
+    //not lootpool
 
     public void setSettings(TwistAppliesTo settings){
         this.settings = settings;

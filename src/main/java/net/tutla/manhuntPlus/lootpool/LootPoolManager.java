@@ -37,15 +37,11 @@ public class LootPoolManager {
         return mapping.getAllNames();
     }
 
-    public static void addLootPool(LootPoolLevelling levelling){
+    public static void addLootPool(UninitalisedLootPool levelling){
         mapping.put(levelling.getId(), levelling);
     }
 
-    public static void removeLootPool(String id){
-        mapping.removeLevelling(id);
-    }
-
-    public static LootPoolLevelling getLevelling(String id){
+    public static UninitalisedLootPool getLevelling(String id){
         return mapping.get(id);
     }
 
@@ -57,17 +53,4 @@ public class LootPoolManager {
         return basicLootPool;
     }
 
-    public static LootPoolLevelling addPlayerLevellingLootPool(Player player) {
-        LootPoolLevelling levelling = new LootPoolLevelling("default", LevellingFactory.createAllTiers(), 1.25);
-        playerLootPoolLevels.put(player.getUniqueId(), levelling);
-        return levelling;
-    }
-    public static void giveLootToLeveller(Player player) {
-        LootPoolLevelling pool = playerLootPoolLevels.get(player.getUniqueId());
-        if (pool == null) {
-            pool = addPlayerLevellingLootPool(player);
-        }
-        ItemStack loot = pool.getLoot();
-        player.give(loot);
-    }
 }

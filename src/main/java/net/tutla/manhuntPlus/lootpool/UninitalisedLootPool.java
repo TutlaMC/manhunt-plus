@@ -6,6 +6,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UninitalisedLootPool {
     public final String id;
+    public String getId(){
+        return id;
+    }
+
 
     private UninitalisedTier uninitalisedTier;
     private final List<LootTier> tiers = new ArrayList<>();
@@ -13,6 +17,10 @@ public class UninitalisedLootPool {
     private double difficultyMultiplier = 1.5;
 
     private final TierBuilder tierBuilder = new TierBuilder();
+
+    public LootPoolLevelling generate(){
+        return tierBuilder.build(id, difficultyMultiplier);
+    }
 
     public UninitalisedLootPool(String id){
         this.id = id;
