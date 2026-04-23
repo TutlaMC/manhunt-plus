@@ -2,7 +2,7 @@ package net.tutla.manhuntPlus.twist;
 
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
-import org.bukkit.block.BlockType;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -14,21 +14,19 @@ public class Twist {
     public boolean isActive;
 
 
-    public boolean configurable = true;
+    public boolean configurable = true; // TODO: Make ever configuring command change this.
     public boolean defaultTwist = false;
 
     public TwistTrigger trigger = TwistTrigger.NONE;
-    public BlockType triggerBlock;
+    public Material triggerBlock;
     public EntityType triggerEntity;
-    public boolean triggerTargetIsHunter;
-    public boolean isTriggerTargetIsSpeedrunner;
 
     public TwistAction responseAction;
     public TwistActionResponseTo responseTo;
 
     public LootPoolLevelling lootpool; // TODO: work on lootpool
 
-    public TwistSettings settings;
+    public TwistAppliesTo settings = TwistAppliesTo.BOTH;
 
     public Twist(String identifier, String label, String description){
         this.label = label;
@@ -36,14 +34,17 @@ public class Twist {
         this.identifier = identifier;
     }
 
-    public void setSettings(TwistSettings settings){
+    public void setSettings(TwistAppliesTo settings){
         this.settings = settings;
     }
 
     public void executeTwist(TwistContext ctx){
+        // set twist context
+        ctx.twist = this;
         if (ctx.twist.identifier.equals("default")) return;
+
         if (triggerBlock != null && ctx.causingBlock != null){
-            if (ctx.causingBlock.getBlockData().getMaterial().asBlockType() == triggerBlock){
+            if (ctx.causingBlock.getBlockData().getMaterial() == triggerBlock){
                 ctx.startResponding();
                 doResponse(ctx);
             }
@@ -54,16 +55,14 @@ public class Twist {
         if (doesContextViolateSettings(ctx)) return;
         // Player doTsTo = findOutWhoTheFuckIsSupposedToRespondTo(ctx);
 
-        // set twist context
-        ctx.twist = this;
         TwistRegister.getTwistActionConsumer(responseAction).accept(ctx);
     }
 
     private boolean doesContextViolateSettings(TwistContext ctx){
-        if (settings.appliesToBoth) return false;
+        if (settings == TwistAppliesTo.BOTH) return false;
 
-        if (settings.appliesOnlyToHunter && !ManhuntContext.isHunter(ctx.cause)) return true;
-        return settings.appliesOnlyToRunner && !ManhuntContext.isSpeedrunner(ctx.cause);
+        if (settings.equals(TwistAppliesTo.HUNTER) && !ManhuntContext.isHunter(ctx.cause)) return true;
+        return settings.equals(TwistAppliesTo.SPEEDRUNNER) && !ManhuntContext.isSpeedrunner(ctx.cause);
     }
 
     private Player findOutWhoTheFuckIsSupposedToRespondTo(TwistContext ctx){

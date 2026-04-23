@@ -1,13 +1,13 @@
 package net.tutla.manhuntPlus.twist;
 
+import net.tutla.manhuntPlus.ManhuntPlus;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.twist.def.DefaultTwist;
 import net.tutla.manhuntPlus.twist.def.MilkHunter;
 import net.tutla.manhuntPlus.twist.def.PigOpLoot;
 import org.bukkit.Bukkit;
-import org.bukkit.block.BlockType;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -23,8 +23,6 @@ public class TwistRegister{
         register(new PigOpLoot());
         register(new MilkHunter());
 
-        getAll();
-
         twistActionConsumerMapping.put(TwistAction.TORTURE_HUNTER, (ctx) -> {
             Player target;
             if (ctx.target == null){ // pick random
@@ -36,6 +34,15 @@ public class TwistRegister{
             }
 
             new TwistsHelper().tortureHunter(target);
+        });
+
+        twistActionConsumerMapping.put(TwistAction.GIVE_LOOT, (ctx) -> {
+            Player cause;
+            if (ctx.cause == null) return;
+            cause = ctx.cause;
+
+            List<ItemStack> items = ManhuntPlus.getInstance().getDefaultLoot().getSomeLoot(64);// TODO: make count within lootpool
+            cause.give(items);
         });
     }
 

@@ -11,6 +11,8 @@ import net.tutla.manhuntPlus.twist.TwistAction;
 import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.twist.TwistTrigger;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -91,6 +93,13 @@ public class CommandSystem {
                         .filter(s -> s.startsWith(arg.toLowerCase()))
                         .toList();
             }
+            case "<enum>" -> {
+                if (autocomplete.enum_ == null) return Collections.emptyList();
+                return Arrays.stream(autocomplete.enum_.getEnumConstants())
+                        .map(Enum::name)
+                        .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
+                        .toList();
+            }
             case "<player>" -> {
                 return Bukkit.getOnlinePlayers().stream()
                         .map(Player::getName)
@@ -127,11 +136,13 @@ public class CommandSystem {
             case "<twistaction>" -> {
                 return Arrays.stream(TwistAction.values())
                         .map(TwistAction::name)
+                        .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
                         .toList();
             }
             case "<twisttrigger>" -> {
                 return Arrays.stream(TwistTrigger.values())
                         .map(TwistTrigger::name)
+                        .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
                         .toList();
             }
             default -> {return Collections.emptyList();}

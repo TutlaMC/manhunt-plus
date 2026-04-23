@@ -7,6 +7,7 @@ public class CommandTabAutoComplete {
     public List<CommandTabAutoComplete> childAutoCompletes;
     public String value;
     public List<String> values;
+    public Class<? extends Enum<?>> enum_;
 
     public CommandTabAutoComplete(String name, List<CommandTabAutoComplete> childAutoCompletes, String value){
         this.name = name;
@@ -16,6 +17,11 @@ public class CommandTabAutoComplete {
 
     public CommandTabAutoComplete setValues(List<String> values){
         this.values = values;
+        return this;
+    }
+
+    public CommandTabAutoComplete setEnum(Class<? extends Enum<?>> enum_){
+        this.enum_ = enum_;
         return this;
     }
 }

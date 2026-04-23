@@ -30,6 +30,20 @@ public class LootPool {
         return null;
     }
 
+    public List<ItemStack> getSomeRandomLoot(int size){
+        List<ItemStack> out = new ArrayList<>();
+        int count = 2 + (size > 0 ? random.nextInt(size) : 0);
+        return getSomeLoot(count);
+    }
+    public List<ItemStack> getSomeLoot(int count){
+        List<ItemStack> out = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            ItemStack loot = getRandomLoot();
+            if (loot != null) out.add(loot);
+        }
+        return out;
+    }
+
     private static class LootEntry {
         ItemStack item;
         double weight;

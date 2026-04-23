@@ -1,5 +1,6 @@
 package net.tutla.manhuntPlus;
 
+import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.manhunt.*;
 import net.tutla.manhuntPlus.twist.TwistContext;
@@ -14,6 +15,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -124,7 +126,6 @@ public class EventListeners implements Listener {
         if (item == null || item.getType() != Material.COMPASS) return;
         if (!(item.getItemMeta() instanceof CompassMeta meta)) return;
 
-        System.out.println("rc");
         String id = meta.getPersistentDataContainer().get(ManhuntPlus.COMPASS_ID_KEY, PersistentDataType.STRING);
         if (id == null) return; // not a manhunt compass
 
@@ -210,5 +211,14 @@ public class EventListeners implements Listener {
 
         }
         ManhuntCompass.setPlayerPortalInfo(p, info);
+    }
+
+    @EventHandler
+    public void onBreakBlock(BlockBreakEvent event){
+        Player breaker = event.getPlayer();
+        TwistContext ctx = new TwistContext();
+        ctx.cause = breaker;
+        ctx.causingBlock = event.getBlock();
+        TwistRegister.runAllTwists(TwistTrigger.BLOCK_BREAK, ctx);
     }
 }
