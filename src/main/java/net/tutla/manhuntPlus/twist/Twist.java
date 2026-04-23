@@ -41,6 +41,7 @@ public class Twist {
     }
 
     public void executeTwist(TwistContext ctx){
+        if (ctx.twist.identifier.equals("default")) return;
         if (triggerBlock != null && ctx.causingBlock != null){
             if (ctx.causingBlock.getBlockData().getMaterial().asBlockType() == triggerBlock){
                 ctx.startResponding();

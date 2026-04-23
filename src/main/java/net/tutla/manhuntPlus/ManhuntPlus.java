@@ -66,6 +66,7 @@ public final class ManhuntPlus extends JavaPlugin {
 
         commandSystem.initialise();
         TwistRegister.init();
+        Manhunt.init();
         getServer().getPluginManager().registerEvents(new EventListeners(helper), this);
         getLogger().info("Manhunt plugin loaded!");
 

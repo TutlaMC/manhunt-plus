@@ -6,6 +6,8 @@ import net.tutla.manhuntPlus.twist.TwistContext;
 import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.twist.TwistTrigger;
 import net.tutla.manhuntPlus.twist.TwistsHelper;
+import net.tutla.manhuntPlus.twist.def.MilkHunter;
+import net.tutla.manhuntPlus.twist.def.PigOpLoot;
 import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
@@ -59,7 +61,7 @@ public class EventListeners implements Listener {
 
 
         if (event.getEntityType() == EntityType.PIG) {
-            if (Manhunt.getTwist() != DefaultTwist.PIG_OP_LOOT) return;
+            if (!(Manhunt.getTwist() instanceof PigOpLoot)) return;
 
             if (killer == null) return;
 
@@ -82,7 +84,7 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 
-        if (Manhunt.getTwist() != DefaultTwist.MILK_HUNTER_OP_LOOT) return;
+        if (!(Manhunt.getTwist() instanceof MilkHunter)) return;
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;

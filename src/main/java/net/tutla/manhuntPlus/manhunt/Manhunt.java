@@ -1,5 +1,8 @@
 package net.tutla.manhuntPlus.manhunt;
 
+import net.tutla.manhuntPlus.twist.Twist;
+import net.tutla.manhuntPlus.twist.TwistRegister;
+import net.tutla.manhuntPlus.twist.def.DefaultTwist;
 import org.bukkit.Bukkit;
 
 public class Manhunt {
@@ -19,12 +22,18 @@ public class Manhunt {
         waitingForStart = stat;
     }
 
-    private static DefaultTwist twist = DefaultTwist.DEFAULT;
-    public static DefaultTwist getTwist() {
+    private static Twist twist;
+    public static Twist getTwist() {
         return twist;
     }
-    public static void setTwist(DefaultTwist twist) {
+    public static void setTwist(Twist twist) {
+        Manhunt.twist.setIsActive(false);
+        twist.setIsActive(true);
         Manhunt.twist = twist;
+    }
+
+    public static void init(){
+        Manhunt.twist = TwistRegister.getTwist("default");
     }
 
     public static Boolean startManhunt(){

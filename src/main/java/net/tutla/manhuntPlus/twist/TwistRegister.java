@@ -1,6 +1,8 @@
 package net.tutla.manhuntPlus.twist;
 
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
+import net.tutla.manhuntPlus.twist.def.DefaultTwist;
+import net.tutla.manhuntPlus.twist.def.MilkHunter;
 import net.tutla.manhuntPlus.twist.def.PigOpLoot;
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockType;
@@ -22,7 +24,11 @@ public class TwistRegister{
 
 
     public static void init(){
+        register(new DefaultTwist());
         register(new PigOpLoot());
+        register(new MilkHunter());
+
+        getAll();
 
         twistActionConsumerMapping.put(TwistAction.TORTURE_HUNTER, (ctx) -> {
             Player target;
@@ -68,6 +74,7 @@ public class TwistRegister{
     public static void unregister(String identifier) {
         Twist twist = twists.remove(identifier);
         if (twist == null) return;
+        if(twist.defaultTwist) return;
         deindex(twist);
     }
 
