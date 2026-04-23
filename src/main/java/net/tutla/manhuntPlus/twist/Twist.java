@@ -1,6 +1,7 @@
 package net.tutla.manhuntPlus.twist;
 
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
+import net.tutla.manhuntPlus.lootpool.LootPoolMapping;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -24,7 +25,7 @@ public class Twist {
     public TwistAction responseAction;
     public TwistActionResponseTo responseTo;
 
-    public LootPoolLevelling lootpool; // TODO: work on lootpool
+    public LootPoolLevelling lootpool; //  TODO: work on lootpool
 
     public TwistAppliesTo settings = TwistAppliesTo.BOTH;
 

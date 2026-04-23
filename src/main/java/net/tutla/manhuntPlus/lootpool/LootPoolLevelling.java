@@ -5,14 +5,21 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class LootPoolLevelling {
+    private final String id;
+
     private final List<LootTier> tiers;
     private int level = 0;
     private int usageCount = 0;
     private final double difficultyMultiplier;
 
-    public LootPoolLevelling(List<LootTier> tiers, double difficultyMultiplier) {
+    public LootPoolLevelling(String id, List<LootTier> tiers, double difficultyMultiplier) {
+        this.id = id;
         this.tiers = tiers;
         this.difficultyMultiplier = difficultyMultiplier;
+    }
+
+    public String getId(){
+        return id;
     }
 
     public ItemStack getLoot() {

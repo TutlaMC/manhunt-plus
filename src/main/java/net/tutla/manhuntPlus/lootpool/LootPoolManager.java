@@ -18,7 +18,7 @@ public class LootPoolManager {
     }
 
     public static LootPoolLevelling addPlayerLevellingLootPool(Player player) {
-        LootPoolLevelling levelling = new LootPoolLevelling(LevellingFactory.createAllTiers(), 1.25);
+        LootPoolLevelling levelling = new LootPoolLevelling("default", LevellingFactory.createAllTiers(), 1.25);
         playerLootPoolLevels.put(player.getUniqueId(), levelling);
         return levelling;
     }
