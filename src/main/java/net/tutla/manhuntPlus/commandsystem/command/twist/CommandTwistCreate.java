@@ -1,15 +1,11 @@
-package net.tutla.manhuntPlus.commandsystem.command.loot;
+package net.tutla.manhuntPlus.commandsystem.command.twist;
 
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
-import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
-import net.tutla.manhuntPlus.manhunt.ManhuntTimer;
 import net.tutla.manhuntPlus.twist.Twist;
 import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.util.TextUtil;
-
-import java.util.List;
 
 public class CommandTwistCreate extends TutlaCommand  {
     private static final String usage = "/twist create <name:one_word>";

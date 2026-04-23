@@ -4,9 +4,8 @@ import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
-import net.tutla.manhuntPlus.commandsystem.command.loot.*;
+import net.tutla.manhuntPlus.commandsystem.command.twist.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CommandTwist extends TutlaCommand {

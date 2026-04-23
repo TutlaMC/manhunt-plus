@@ -1,22 +1,21 @@
-package net.tutla.manhuntPlus.commandsystem.command.loot;
+package net.tutla.manhuntPlus.commandsystem.command.twist;
 
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
-import net.tutla.manhuntPlus.twist.TwistAppliesTo;
 import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.util.TextUtil;
-import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 
 import java.util.List;
 
-public class CommandTwistAppliesTo extends TutlaCommand  {
-    private static final String usage = "/twist appliesto <group>";
-    public CommandTwistAppliesTo(){
-        super("appliesto", usage, "Set who can trigger the twist", CommandSection.TWIST,
-                new CommandTabAutoComplete("appliesto", List.of(
-                        new CommandTabAutoComplete(null, null, "<enum>").setEnum(TwistAppliesTo.class)
+public class CommandTwistTriggerEntity extends TutlaCommand  {
+    private static final String usage = "/twist triggerentity <entity>";
+    public CommandTwistTriggerEntity(){
+        super("triggerentity", usage, "Set a twist's trigger entity", CommandSection.TWIST,
+                new CommandTabAutoComplete("triggerentity", List.of(
+                        new CommandTabAutoComplete(null, null, "<enum>").setEnum(EntityType.class)
                 ), "<twist>")
         );
     }
@@ -26,9 +25,9 @@ public class CommandTwistAppliesTo extends TutlaCommand  {
         if (ctx.args.length == 3) {
             if (TwistRegister.twistExists(ctx.args[1])){
                 try {
-                    TwistRegister.getTwist(ctx.args[1]).setSettings(TwistAppliesTo.valueOf(ctx.args[2].toUpperCase()));
+                    TwistRegister.getTwist(ctx.args[1]).triggerEntity = EntityType.valueOf(ctx.args[2].toUpperCase());
                 } catch (IllegalArgumentException e) {
-                    ctx.player.sendMessage(TextUtil.parse("<red>You cannot apply to that group (that group doesn't exist)!"));
+                    ctx.player.sendMessage(TextUtil.parse("<red>Entity doesn't exist!"));
                     return false;
                 }
             } else {

@@ -1,4 +1,4 @@
-package net.tutla.manhuntPlus.commandsystem.command.loot;
+package net.tutla.manhuntPlus.commandsystem.command.twist;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;

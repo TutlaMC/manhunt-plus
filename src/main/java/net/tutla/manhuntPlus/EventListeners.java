@@ -2,6 +2,7 @@ package net.tutla.manhuntPlus;
 
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import net.tutla.manhuntPlus.lootpool.LootPool;
+import net.tutla.manhuntPlus.lootpool.LootPoolManager;
 import net.tutla.manhuntPlus.manhunt.*;
 import net.tutla.manhuntPlus.twist.TwistContext;
 import net.tutla.manhuntPlus.twist.TwistRegister;
@@ -70,7 +71,7 @@ public class EventListeners implements Listener {
             if (!ManhuntContext.getPlayingSpeedrunners().contains(killer.getUniqueId())) return;
 
             event.getDrops().clear();
-            LootPool pool = ManhuntPlus.getInstance().getDefaultLoot();
+            LootPool pool = LootPoolManager.getDefaultLoot();
 
             for (int i = 0; i < 2 + new Random().nextInt(3); i++) {
                 ItemStack drop = pool.getRandomLoot();

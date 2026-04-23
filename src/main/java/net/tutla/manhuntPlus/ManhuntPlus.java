@@ -5,6 +5,7 @@ import net.tutla.manhuntPlus.commandsystem.CommandSystem;
 import net.tutla.manhuntPlus.lootpool.LevellingFactory;
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
+import net.tutla.manhuntPlus.lootpool.LootPoolManager;
 import net.tutla.manhuntPlus.manhunt.*;
 import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.twist.TwistsHelper;
@@ -33,40 +34,22 @@ public final class ManhuntPlus extends JavaPlugin {
 
     // twist shit
     // ik the code is shit but like im shit at naming
-    public static Map<UUID, LootPoolLevelling> playerLootPoolLevels = new HashMap<>();
 
-    private static LootPool basicLootPool;
-    public LootPool getDefaultLoot() {
-        return basicLootPool;
-    }
-
-    public static LootPoolLevelling addPlayerLevellingLootPool(Player player) {
-        LootPoolLevelling levelling = new LootPoolLevelling(LevellingFactory.createAllTiers(), 1.25);
-        playerLootPoolLevels.put(player.getUniqueId(), levelling);
-        return levelling;
-    }
-    public static void giveLootToLeveller(Player player) {
-        LootPoolLevelling pool = playerLootPoolLevels.get(player.getUniqueId());
-        if (pool == null) {
-            pool = addPlayerLevellingLootPool(player);
-        }
-        ItemStack loot = pool.getLoot();
-        player.getInventory().addItem(loot);
-    }
 
 
     // actual shi
     @Override
     public void onEnable() {
         instance = this;
-        basicLootPool = LootPool.createDefault();
         TwistsHelper helper = new TwistsHelper();
 
         saveDefaultConfig();
 
         commandSystem.initialise();
+        LootPoolManager.init();
         TwistRegister.init();
         Manhunt.init();
+
         getServer().getPluginManager().registerEvents(new EventListeners(helper), this);
         getLogger().info("Manhunt plugin loaded!");
 

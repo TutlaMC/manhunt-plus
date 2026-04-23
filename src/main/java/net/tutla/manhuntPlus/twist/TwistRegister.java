@@ -1,6 +1,7 @@
 package net.tutla.manhuntPlus.twist;
 
 import net.tutla.manhuntPlus.ManhuntPlus;
+import net.tutla.manhuntPlus.lootpool.LootPoolManager;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.twist.def.DefaultTwist;
 import net.tutla.manhuntPlus.twist.def.MilkHunter;
@@ -41,7 +42,7 @@ public class TwistRegister{
             if (ctx.cause == null) return;
             cause = ctx.cause;
 
-            List<ItemStack> items = ManhuntPlus.getInstance().getDefaultLoot().getSomeLoot(64);// TODO: make count within lootpool
+            List<ItemStack> items = LootPoolManager.getDefaultLoot().getSomeLoot(64);// TODO: make count within lootpool
             cause.give(items);
         });
     }
