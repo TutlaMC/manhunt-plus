@@ -1,8 +1,11 @@
 package net.tutla.manhuntPlus.twist;
 
+import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.twist.def.PigOpLoot;
+import org.bukkit.Bukkit;
 import org.bukkit.block.BlockType;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -20,6 +23,19 @@ public class TwistRegister{
 
     public static void init(){
         register(new PigOpLoot());
+
+        twistActionConsumerMapping.put(TwistAction.TORTURE_HUNTER, (ctx) -> {
+            Player target;
+            if (ctx.target == null){ // pick random
+                Random random = new Random();
+                UUID targ = ManhuntContext.getHunters().get(random.nextInt(ManhuntContext.getHunters().size()));
+                target = Bukkit.getPlayer(targ);
+            } else {
+                target = ctx.target;
+            }
+
+            new TwistsHelper().tortureHunter(target);
+        });
     }
 
     public static void runAllTwists(TwistTrigger trigger, TwistContext ctx){
@@ -38,6 +54,11 @@ public class TwistRegister{
         return twistActionConsumerMapping.get(act);
     }
 
+    public static boolean twistExists(String identifier){
+        Twist twist = getTwist(identifier);
+        return twist != null;
+    }
+
     public static void register(Twist twist) {
         if (twists.containsKey(twist.identifier)) return;
         twists.put(twist.identifier, twist);
@@ -50,8 +71,22 @@ public class TwistRegister{
         deindex(twist);
     }
 
-    public static boolean isRegistered(String identifier) {
-        return twists.containsKey(identifier);
+
+    public static Twist getTwist(String identifier){
+        return twists.get(identifier);
+    }
+
+    public static List<String> getAllTwistNames(){
+        return getAll().stream()
+                .map(Twist::getIdentifier)
+                .toList();
+    }
+
+    public static List<String> searchTwists(String arg){
+        return getAll().stream()
+                .map(Twist::getIdentifier)
+                .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
+                .toList();
     }
 
     public static Collection<Twist> getAll() {

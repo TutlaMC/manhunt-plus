@@ -5,6 +5,7 @@ import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
 import net.tutla.manhuntPlus.commandsystem.command.loot.CommandTwistCreate;
+import net.tutla.manhuntPlus.commandsystem.command.loot.CommandTwistEffect;
 import net.tutla.manhuntPlus.commandsystem.command.loot.CommandTwistHelp;
 import net.tutla.manhuntPlus.commandsystem.command.loot.CommandTwistList;
 
@@ -15,7 +16,8 @@ public class CommandTwist extends TutlaCommand {
     private static final List<TutlaCommand> subcommands = List.of(
             new CommandTwistCreate(),
             new CommandTwistHelp(),
-            new CommandTwistList()
+            new CommandTwistList(),
+            new CommandTwistEffect()
     );
     private static final List<CommandTabAutoComplete> subcommandsAutoCompletes = subcommands.stream().map(cmd -> cmd.autocomplete).toList();
     private static final List<String> subcommandNames = subcommands.stream().map(TutlaCommand::name).toList();

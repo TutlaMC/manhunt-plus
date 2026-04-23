@@ -80,4 +80,16 @@ public class Twist {
     public void setIsActive(boolean val){
         isActive = val;
     }
+
+    public String getLabel(){
+        return label;
+    }
+
+    public String getIdentifier(){
+        return identifier;
+    }
+
+    public String getDescription(){
+        return description;
+    }
 }

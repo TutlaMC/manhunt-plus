@@ -52,6 +52,8 @@ public class EventListeners implements Listener {
         Player killer = event.getEntity().getKiller();
         if (killer != null){
             TwistContext ctx = new TwistContext();
+            ctx.cause = killer;
+            ctx.causingEntity = event.getEntity();
             TwistRegister.runAllTwists(TwistTrigger.ENTITY_KILL, ctx);
         }
 

@@ -6,13 +6,14 @@ import net.tutla.manhuntPlus.commandsystem.command.CompassCommand;
 import net.tutla.manhuntPlus.commandsystem.command.SurroundCommand;
 import net.tutla.manhuntPlus.commandsystem.command.manhunt.CommandManhuntHelp;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
+import net.tutla.manhuntPlus.twist.Twist;
+import net.tutla.manhuntPlus.twist.TwistAction;
+import net.tutla.manhuntPlus.twist.TwistRegister;
+import net.tutla.manhuntPlus.twist.TwistTrigger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class CommandSystem {
@@ -65,7 +66,7 @@ public class CommandSystem {
         if (complete.childAutoCompletes != null) {
             for (CommandTabAutoComplete child : complete.childAutoCompletes) {
                 if (child == null) continue;
-                if (child.name.equalsIgnoreCase(ctx.args[cidx])) {
+                if (child.name == null || child.name.equalsIgnoreCase(ctx.args[cidx])) {
                     return getAutoComplete(child, ctx, cidx + 1);
                 }
             }
@@ -118,6 +119,19 @@ public class CommandSystem {
                         .filter(Objects::nonNull)
                         .map(Player::getName)
                         .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
+                        .toList();
+            }
+            case "<twist>" -> {
+                return TwistRegister.searchTwists(arg);
+            }
+            case "<twistaction>" -> {
+                return Arrays.stream(TwistAction.values())
+                        .map(TwistAction::name)
+                        .toList();
+            }
+            case "<twisttrigger>" -> {
+                return Arrays.stream(TwistTrigger.values())
+                        .map(TwistTrigger::name)
                         .toList();
             }
             default -> {return Collections.emptyList();}
