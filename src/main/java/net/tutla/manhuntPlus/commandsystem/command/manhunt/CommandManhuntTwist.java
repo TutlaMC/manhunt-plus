@@ -6,7 +6,7 @@ import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.CommandTabAutoComplete;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
 import net.tutla.manhuntPlus.manhunt.Manhunt;
-import net.tutla.manhuntPlus.manhunt.Twist;
+import net.tutla.manhuntPlus.manhunt.DefaultTwist;
 import net.tutla.manhuntPlus.util.TextUtil;
 
 import java.util.Arrays;
@@ -14,7 +14,7 @@ public class CommandManhuntTwist extends TutlaCommand {
     public CommandManhuntTwist() {
         super("twist", "/manhunt twist <twist>", "Apply a twist to the manhunt", CommandSection.SETTINGS,
                 new CommandTabAutoComplete("twist", null, "<values>")
-                        .setValues(Arrays.stream(Twist.values())
+                        .setValues(Arrays.stream(DefaultTwist.values())
                                 .map(t -> t.name().toLowerCase())
                                 .toList()
                         )
@@ -29,7 +29,7 @@ public class CommandManhuntTwist extends TutlaCommand {
         }
 
         try {
-            Twist selected = Twist.valueOf(ctx.args[1].toUpperCase());
+            DefaultTwist selected = DefaultTwist.valueOf(ctx.args[1].toUpperCase());
             Manhunt.setTwist(selected);
             ctx.player.sendMessage(TextUtil.parse(
                     "<green>Twist set to: <bold>" + selected.label + "</bold></green>\n" +
@@ -46,7 +46,7 @@ public class CommandManhuntTwist extends TutlaCommand {
     }
 
     private void showCurrentTwist(CommandContext ctx) {
-        Twist current = Manhunt.getTwist();
+        DefaultTwist current = Manhunt.getTwist();
         ctx.player.sendMessage(TextUtil.parse(
                 "<yellow>Current twist: <bold>" + current.label + "</bold></yellow>\n" +
                         "<gray>" + current.description + "</gray>\n" +
@@ -57,7 +57,7 @@ public class CommandManhuntTwist extends TutlaCommand {
 
     private void showTwistList(CommandContext ctx) {
         Component list = TextUtil.parse("<yellow><bold>── Available Twists ──</bold></yellow>\n");
-        for (Twist twist : Twist.values()) {
+        for (DefaultTwist twist : DefaultTwist.values()) {
             list = list.append(Component.empty()
                     .append(TextUtil.parse(
                             "<green><click:run_command:'/manhunt twist " + twist.name().toLowerCase() + "'>" +

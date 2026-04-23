@@ -46,7 +46,7 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntityType() == EntityType.PIG) {
-            if (Manhunt.getTwist() != Twist.PIG_OP_LOOT) return;
+            if (Manhunt.getTwist() != DefaultTwist.PIG_OP_LOOT) return;
 
             Player killer = event.getEntity().getKiller();
             if (killer == null) return;
@@ -70,7 +70,7 @@ public class EventListeners implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 
-        if (Manhunt.getTwist() != Twist.MILK_HUNTER_OP_LOOT) return;
+        if (Manhunt.getTwist() != DefaultTwist.MILK_HUNTER_OP_LOOT) return;
 
         Player player = event.getPlayer();
         if (!(event.getRightClicked() instanceof Player target)) return;

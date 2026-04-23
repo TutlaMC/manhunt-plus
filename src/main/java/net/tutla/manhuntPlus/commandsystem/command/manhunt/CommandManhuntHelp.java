@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.tutla.manhuntPlus.commandsystem.CommandContext;
 import net.tutla.manhuntPlus.commandsystem.CommandSection;
 import net.tutla.manhuntPlus.commandsystem.TutlaCommand;
-import net.tutla.manhuntPlus.manhunt.Twist;
+import net.tutla.manhuntPlus.manhunt.DefaultTwist;
 import net.tutla.manhuntPlus.util.TextUtil;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class CommandManhuntHelp extends TutlaCommand {
 <yellow><bold>── Twists ──</bold></yellow>
 
 """);
-        for (Twist twist : Twist.values()){
+        for (DefaultTwist twist : DefaultTwist.values()){
             twists = twists.append(TextUtil.parse("<aqua>"+twist.label+"</aqua> <gray>– "+twist.description+"</gray>\n"));
         }
         Component footer = TextUtil.parse("""

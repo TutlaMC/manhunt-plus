@@ -19,11 +19,11 @@ public class Manhunt {
         waitingForStart = stat;
     }
 
-    private static Twist twist = Twist.DEFAULT;
-    public static Twist getTwist() {
+    private static DefaultTwist twist = DefaultTwist.DEFAULT;
+    public static DefaultTwist getTwist() {
         return twist;
     }
-    public static void setTwist(Twist twist) {
+    public static void setTwist(DefaultTwist twist) {
         Manhunt.twist = twist;
     }
 
