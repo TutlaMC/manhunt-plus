@@ -11,6 +11,11 @@ public class Twist {
     public String identifier;
     public String label;
     public String description;
+    public boolean isActive;
+
+
+    public boolean configurable = true;
+    public boolean defaultTwist = false;
 
     public TwistTrigger trigger = TwistTrigger.NONE;
     public BlockType triggerBlock;
@@ -46,10 +51,11 @@ public class Twist {
 
     private void doResponse(TwistContext ctx){
         if (doesContextViolateSettings(ctx)) return;
-        if (responseAction == TwistAction.GIVE_LOOT){
-            Player doTsTo = findOutWhoTheFuckIsSupposedToRespondTo(ctx);
-            //TODO: lootpool action
-        }
+        // Player doTsTo = findOutWhoTheFuckIsSupposedToRespondTo(ctx);
+
+        // set twist context
+        ctx.twist = this;
+        TwistRegister.getTwistActionConsumer(responseAction).accept(ctx);
     }
 
     private boolean doesContextViolateSettings(TwistContext ctx){
@@ -65,5 +71,13 @@ public class Twist {
         } else {
             return ctx.cause;
         }
+    }
+
+    public boolean isActive(){
+        return isActive;
+    }
+
+    public void setIsActive(boolean val){
+        isActive = val;
     }
 }

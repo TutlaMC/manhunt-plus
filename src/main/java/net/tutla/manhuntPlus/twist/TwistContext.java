@@ -5,6 +5,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class TwistContext {
+    public Twist twist;
+
     public Player cause;
     public Player target;
 

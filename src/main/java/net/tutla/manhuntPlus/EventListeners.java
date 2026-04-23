@@ -2,6 +2,9 @@ package net.tutla.manhuntPlus;
 
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.manhunt.*;
+import net.tutla.manhuntPlus.twist.TwistContext;
+import net.tutla.manhuntPlus.twist.TwistRegister;
+import net.tutla.manhuntPlus.twist.TwistTrigger;
 import net.tutla.manhuntPlus.twist.TwistsHelper;
 import net.tutla.manhuntPlus.util.TextUtil;
 import org.bukkit.*;
@@ -26,7 +29,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class EventListeners implements Listener {
-    private static TwistsHelper helper;
+    private final TwistsHelper helper;
 
     public EventListeners(TwistsHelper helper) {
         this.helper = helper;
@@ -45,10 +48,17 @@ public class EventListeners implements Listener {
     }
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
+        // TODO: get twists from register
+        Player killer = event.getEntity().getKiller();
+        if (killer != null){
+            TwistContext ctx = new TwistContext();
+            TwistRegister.runAllTwists(TwistTrigger.ENTITY_KILL, ctx);
+        }
+
+
         if (event.getEntityType() == EntityType.PIG) {
             if (Manhunt.getTwist() != DefaultTwist.PIG_OP_LOOT) return;
 
-            Player killer = event.getEntity().getKiller();
             if (killer == null) return;
 
             if (!ManhuntContext.getPlayingSpeedrunners().contains(killer.getUniqueId())) return;

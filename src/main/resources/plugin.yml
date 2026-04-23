@@ -19,3 +19,7 @@ commands:
   surround:
     description: Surround a speedrunner with hunters
     permission: permission.node
+  twist:
+    description: Configure custom twists
+    permission: permission.node
+

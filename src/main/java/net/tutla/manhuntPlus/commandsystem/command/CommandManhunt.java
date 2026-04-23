@@ -35,7 +35,6 @@ public class CommandManhunt extends TutlaCommand {
 
     @Override
     public boolean run(CommandContext ctx) {
-        System.out.println(Arrays.toString(ctx.args));
         if (ctx.args.length == 0) {
             return false;
         }

@@ -6,6 +6,7 @@ import net.tutla.manhuntPlus.lootpool.LevellingFactory;
 import net.tutla.manhuntPlus.lootpool.LootPool;
 import net.tutla.manhuntPlus.lootpool.LootPoolLevelling;
 import net.tutla.manhuntPlus.manhunt.*;
+import net.tutla.manhuntPlus.twist.TwistRegister;
 import net.tutla.manhuntPlus.twist.TwistsHelper;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,6 +65,7 @@ public final class ManhuntPlus extends JavaPlugin {
         saveDefaultConfig();
 
         commandSystem.initialise();
+        TwistRegister.init();
         getServer().getPluginManager().registerEvents(new EventListeners(helper), this);
         getLogger().info("Manhunt plugin loaded!");
 

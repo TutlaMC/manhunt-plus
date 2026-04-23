@@ -1,6 +1,7 @@
 package net.tutla.manhuntPlus.commandsystem;
 
 import net.tutla.manhuntPlus.commandsystem.command.CommandManhunt;
+import net.tutla.manhuntPlus.commandsystem.command.CommandTwist;
 import net.tutla.manhuntPlus.commandsystem.command.CompassCommand;
 import net.tutla.manhuntPlus.commandsystem.command.SurroundCommand;
 import net.tutla.manhuntPlus.commandsystem.command.manhunt.CommandManhuntHelp;
@@ -19,6 +20,7 @@ public class CommandSystem {
     private final List<TutlaCommand> commands = List.of(
             new CompassCommand(),
             manhuntCommand,
+            new CommandTwist(),
             new SurroundCommand()
     );
 
