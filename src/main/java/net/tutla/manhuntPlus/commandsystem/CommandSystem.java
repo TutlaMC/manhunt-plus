@@ -1,10 +1,8 @@
 package net.tutla.manhuntPlus.commandsystem;
 
-import net.tutla.manhuntPlus.commandsystem.command.CommandManhunt;
-import net.tutla.manhuntPlus.commandsystem.command.CommandTwist;
-import net.tutla.manhuntPlus.commandsystem.command.CompassCommand;
-import net.tutla.manhuntPlus.commandsystem.command.SurroundCommand;
+import net.tutla.manhuntPlus.commandsystem.command.*;
 import net.tutla.manhuntPlus.commandsystem.command.manhunt.CommandManhuntHelp;
+import net.tutla.manhuntPlus.lootpool.LootPoolManager;
 import net.tutla.manhuntPlus.manhunt.ManhuntContext;
 import net.tutla.manhuntPlus.twist.Twist;
 import net.tutla.manhuntPlus.twist.TwistAction;
@@ -24,7 +22,8 @@ public class CommandSystem {
             new CompassCommand(),
             manhuntCommand,
             new CommandTwist(),
-            new SurroundCommand()
+            new SurroundCommand(),
+            new CommandLootPool()
     );
 
     public void initialise() {
@@ -142,6 +141,17 @@ public class CommandSystem {
             case "<twisttrigger>" -> {
                 return Arrays.stream(TwistTrigger.values())
                         .map(TwistTrigger::name)
+                        .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
+                        .toList();
+            }
+            case "<lootpool>" -> {
+                return LootPoolManager.getAllNames().stream()
+                        .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
+                        .toList();
+            }
+            case "<tier>" -> {
+                return LootPoolManager.getUninitialisedLootPool()
+                        .getAllTierNames().stream()
                         .filter(name -> name.toLowerCase().startsWith(arg.toLowerCase()))
                         .toList();
             }

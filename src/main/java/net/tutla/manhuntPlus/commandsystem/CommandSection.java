@@ -5,6 +5,7 @@ public enum CommandSection {
     CONTROLS("Controls"),
     SETTINGS("Settings"),
     TWIST("Twist"),
+    LOOTPOOL("Loot Pool"),
     OTHER("Other"),
     NONE(null);
 

@@ -2,6 +2,7 @@ package net.tutla.manhuntPlus.lootpool;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class TierBuilder {
     private final List<LootTier> tiers = new ArrayList<>();
@@ -24,6 +25,10 @@ public class TierBuilder {
             }
         }
         return this;
+    }
+
+    public Stream<String> getAllNamesStream(){
+        return tiers.stream().map(LootTier::getName);
     }
 
     public LootPoolLevelling build(String name, double difficultyMultiplier) {

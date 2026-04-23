@@ -1,0 +1,52 @@
+package net.tutla.manhuntPlus.lootpool;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class UninitalisedLootPool {
+    public final String id;
+
+    private UninitalisedTier uninitalisedTier;
+    private final List<LootTier> tiers = new ArrayList<>();
+
+    private double difficultyMultiplier = 1.5;
+
+    private final TierBuilder tierBuilder = new TierBuilder();
+
+    public UninitalisedLootPool(String id){
+        this.id = id;
+    }
+
+    public TierBuilder getTierBuilder(){
+        return tierBuilder;
+    }
+
+    public void setUninitalisedTier(UninitalisedTier tier){
+       uninitalisedTier = tier;
+    }
+
+    public UninitalisedTier getUninitialisedTier(){
+        return uninitalisedTier;
+    }
+
+    public List<LootTier> getTiers(){
+        return tiers;
+    }
+
+    public List<String> getAllTierNames(){
+        return tiers.stream().map(LootTier::getName).toList();
+    }
+
+    public void removeTierByName(String name){
+        tiers.removeIf(t -> t.getName().equals(name));
+    }
+
+    public double getDifficultyMultiplier(){
+        return difficultyMultiplier;
+    }
+
+    public void setDifficultyMultiplier(double multiplier){
+        difficultyMultiplier = multiplier;
+    }
+}

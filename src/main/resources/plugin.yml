@@ -22,4 +22,7 @@ commands:
   twist:
     description: Configure custom twists
     permission: permission.node
+  lootpool:
+    description: Configure custom lootpools
+    permission: permission.node
 

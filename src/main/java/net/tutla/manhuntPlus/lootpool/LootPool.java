@@ -15,7 +15,9 @@ public class LootPool {
     public void addLoot(ItemStack item, double weight) {
         entries.add(new LootEntry(item, weight));
     }
-
+    public List<LootEntry> getEntries(){
+        return entries;
+    }
     public ItemStack getRandomLoot() {
         double totalWeight = entries.stream().mapToDouble(e -> e.weight).sum();
         double r = random.nextDouble() * totalWeight;
@@ -44,9 +46,9 @@ public class LootPool {
         return out;
     }
 
-    private static class LootEntry {
-        ItemStack item;
-        double weight;
+    public static class LootEntry {
+        public ItemStack item;
+        public double weight;
 
         LootEntry(ItemStack item, double weight) {
             this.item = item;
