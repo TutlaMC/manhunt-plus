@@ -20,7 +20,7 @@ import java.util.List;
 public class CommandLootPoolPool extends TutlaCommand {
     private static final String usage = "/lootpool pool <add|remove|list> <add:item> <add:number> <add:weight> <remove:index>";
     public CommandLootPoolPool(){
-        super("pool", usage, "Create a new lootpool", CommandSection.LOOTPOOL,
+        super("pool", usage, "Add/remove/list items in a lootpool", CommandSection.LOOTPOOL,
                 new CommandTabAutoComplete("pool", List.of(
                         new CommandTabAutoComplete("add", List.of(), "<enum>").setEnum(Material.class),
                         new CommandTabAutoComplete("remove", null, ""), // TODO: add unpool items

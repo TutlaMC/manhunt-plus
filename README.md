@@ -13,29 +13,95 @@
 
 ### 🕹️ Commands
 
-#### 🧍 Basic Setup
-- `/manhunt speedrunner add|remove <player>` – Add/remove a speedrunner
-- `/manhunt hunter add|remove <player>` – Add/remove a hunter
-- `/manhunt start` – Start the manhunt
-- `/manhunt stop` – Stop the manhunt
-- `/manhunt list` – Lists all hunters and speedrunners
-- `/compass <player:speedrunner>` – Track a speedrunner
+<details>
+<summary>🧍 <b>Basic Setup & Commands</b></summary>
 
-#### 🧪 Extras
-- `/manhunt prepare` – Waits for a speedrunner to hit a hunter to start
-- `/surround <speedrunner>` – Surrounds the speedrunner with all hunters
+<br>
 
-#### ⚙️ Settings
-- `/manhunt countdown <minutes>` – Set a max time limit ⏱️ (**Set to 0 to disable**)
-- `/manhunt twist <twist>` – Apply a twist to the manhunt (default is `DEFAULT`)
-- `/manhunt help` – Open the help menu 📖
-- Config:
-  
+| ⚙️ Category | 💻 Command                             | 📖 Description                                                       |
+|------------|----------------------------------------|----------------------------------------------------------------------|
+| 🧍 Setup | `/manhunt speedrunner add <player>`    | Add a speedrunner                                                    |
+| 🧍 Setup | `/manhunt speedrunner remove <player>` | Remove a speedrunner                                                 |
+| 🧍 Setup | `/manhunt hunter add <player>`         | Add a hunter                                                         |
+| 🧍 Setup | `/manhunt hunter remove <player>`      | Remove a hunter                                                      |
+| 🚀 Game | `/manhunt start`                       | Start the manhunt                                                    |
+| 🛑 Game | `/manhunt stop`                        | Stop the manhunt                                                     |
+| 📋 Info | `/manhunt list`                        | List all hunters & speedrunners                                      |
+| 📋 Info | `/manhunt donate`                      | [Donate](https://donatr.ee/tutlamc?utm_source=copy&utm_medium=share) |
+| 🧭 Tracking | `/compass <player:speedrunner>`        | Track a speedrunner                                                  |
 
+</details>
+
+<details>
+<summary> 🧪 Extras </summary>
+
+| 💻 Command | 📖 Description |
+|-----------|----------------|
+|`/manhunt prepare` | Waits for a speedrunner to hit a hunter to start
+| `/surround <speedrunner>` | Surrounds the speedrunner with all hunters
+</details>
+
+<details>
+<summary>⚙️ <b>Settings</b></summary>
+
+<br>
+
+| 💻 Command | 📖 Description |
+|-----------|----------------|
+| `/manhunt countdown <minutes>` | Set a max time limit ⏱️ (**0 to disable**) |
+| `/manhunt twist <twist>` | Apply a twist (default: `DEFAULT`) |
+| `/manhunt help` | Open the help menu 📖 |
+
+</details>
+
+<details>
+<summary>🌀 <b>Custom Twist Creator</b></summary>
+
+<br>
+
+| 💻 Command | 📖 Description |
+|-----------|----------------|
+| `/twist create <name:one_word>` | Create a new twist |
+| `/twist help` | Show help for twist commands |
+| `/twist list` | List all twists |
+| `/twist effect <twist_name> <effect>` | Set twist output action |
+| `/twist trigger <twist_name> <trigger>` | Set twist trigger |
+| `/twist triggerentity <entity>` | Set trigger entity |
+| `/twist triggerblock <block>` | Set trigger block |
+| `/twist appliesto <group>` | Set who can trigger the twist |
+| `/twist lootpool <twist_name> <lootpool_name>` | Assign a lootpool |
+| `/twist description <twist_name> <description>` | Set twist description |
+
+</details>
+
+<details>
+<summary>📦 <b>LootPool Commands</b></summary>
+
+<br>
+
+| 💻 Command | 📖 Description |
+|-----------|----------------|
+| `/lootpool create <name:one_word>` | Create a new lootpool |
+| `/lootpool pool add <item> <number> <weight>` | Add item to pool |
+| `/lootpool pool remove <index>` | Remove item by index |
+| `/lootpool pool list` | List pool items |
+| `/lootpool tier create <name>` | Start a new lootpool tier |
+| `/lootpool tier cancel` | Cancel tier creation |
+| `/lootpool tier complete` | Finish and save tier |
+| `/lootpool tier add <item>` | Add item to current tier |
+| `/lootpool tier remove <index>` | Remove item from tier |
+| `/lootpool delete <name>` | Delete a lootpool |
+| `/lootpool difficultymultiplier <decimal>` | Set difficulty multiplier |
+| `/lootpool complete` | Complete lootpool |
+| `/lootpool list` | List all lootpools |
+| `/lootpool cancel` | Cancel lootpool creation |
+| `/lootpool help` | Show help for lootpool commands |
+
+</details>
 
 ---
 
-### 🌀 Twists
+### 🌀 Default Twists
 - `DEFAULT` – Standard manhunt rules
 - `PIG_OP_LOOT` – Pigs drop OP loot (only for the speedrunner 🐷💎)
 - **More twists coming soon! 🔧**
@@ -57,8 +123,9 @@
 ---
 
 ## 🚧 Coming Soon
-- 🛠️ Custom Twist Tweaker
-- 🎯 Lootpool Modifier
+- 🌀 Many more twists
+- 📊 Leaderboards?
+- 🛠️ More customizability
 
 ---
 
@@ -67,6 +134,7 @@
 - 💬 Join our [**Discord**](https://discord.tutla.net) for sneak peeks & community support
 - ⭐ Star us on [**GitHub**](https://github.com/TutlaMC/manhunt-plus)
 - 🌐 Visit our [**Website**](https://tutla.net) for updates
+- 💙 Contribute by [**donating**](https://donatr.ee/tutlamc?utm_source=copy&utm_medium=share)
 
 Think we’re missing something? **Contribute on [GitHub](https://github.com/TutlaMC/manhunt-plus)**
 
@@ -74,5 +142,6 @@ Think we’re missing something? **Contribute on [GitHub](https://github.com/Tut
 
 ## 🧪 Other Tutla Studio Projects
 
+- ⚔️ [**PvP+**](https://modrinth.com/plugin/pvp+plugin) – A Comprehensive PvP Plugin for Paper servers
 - 🛡️ [**LeaveBind!**](https://modrinth.com/mod/leavebind) – Leave the server with a click of a button
 - 🧾 [**Leave This, GoBack!**](https://modrinth.com/mod/leave-this-go-back) – Pressing on a slot twice returns you back to the previous slot. Useful for attribute swapping / quick tool swapping / mace pvp 

@@ -32,6 +32,9 @@ public class CommandLootPool extends TutlaCommand {
                         .setValues(subcommandNames)
         );
 
+        subcommands.forEach((e)->{
+            System.out.println("- `"+e.getHelpString()+"`"+" - "+e.getDescription());
+        });
     }
 
     @Override
