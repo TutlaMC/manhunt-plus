@@ -19,12 +19,15 @@ public class CommandLootPoolList extends TutlaCommand  {
         builder.append("<yellow><bold>");
         builder.append("All Custom Lootpools ");
         builder.append("<reset>\n");
-        LootPoolManager.getAllNames().forEach((lootTier -> {
-            builder.append("- <cyan>");
+        int e = 0;
+        for (String lootTier : LootPoolManager.getAllNames()) {
+            builder.append("- [");
+            builder.append(e);
+            builder.append("]<reset> <cyan>");
             builder.append(lootTier);
-            builder.append("<reset>");
-            builder.append("\n");
-        }));
+            builder.append("<reset>\n");
+            e++;
+        }
         ctx.player.sendMessage(TextUtil.parse(builder.toString()));
         return true;
     }

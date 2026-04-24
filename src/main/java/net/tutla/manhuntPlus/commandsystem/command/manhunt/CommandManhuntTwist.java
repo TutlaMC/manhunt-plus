@@ -30,7 +30,7 @@ public class CommandManhuntTwist extends TutlaCommand {
             Twist selected = TwistRegister.getTwist(ctx.args[1]);
             Manhunt.setTwist(selected);
             ctx.player.sendMessage(TextUtil.parse(
-                    "<green>Twist set to: <bold>" + selected.label + "</bold></green>\n" +
+                    "<green>Twist set to: <bold>" + selected.label + "</bold></green> - " +
                             "<gray>" + selected.description + "</gray>"
             ));
         } else {

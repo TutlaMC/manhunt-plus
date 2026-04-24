@@ -18,6 +18,10 @@ public class CommandLootPoolComplete extends TutlaCommand  {
     public boolean run(CommandContext ctx){
         if (LootPoolCommandUtil.existsUninitialised(ctx)) return true;
         UninitalisedLootPool uninitalisedLootPool = LootPoolManager.getUninitialisedLootPool();
+        if (uninitalisedLootPool.getTiers().isEmpty()){
+            ctx.player.sendMessage(TextUtil.parse("<red>Your lootpool is empty! Add some tiers using /lootpool tier create"));
+            return true;
+        }
         LootPoolManager.addLootPool(uninitalisedLootPool);
         LootPoolManager.setUninitialisedLootPool(null);
         ctx.player.sendMessage(TextUtil.parse("<green>LootPool:</green> Completed Creating Lootpool "+uninitalisedLootPool.id));

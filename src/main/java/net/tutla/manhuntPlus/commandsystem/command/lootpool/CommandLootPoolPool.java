@@ -26,7 +26,7 @@ public class CommandLootPoolPool extends TutlaCommand {
                         new CommandTabAutoComplete("remove", null, ""), // TODO: add unpool items
                         new CommandTabAutoComplete("list", null, "")
                 ), "<values>")
-                        .setValues(List.of("add", "remove"))
+                        .setValues(List.of("add", "remove", "list"))
         );
     }
 
@@ -57,6 +57,7 @@ public class CommandLootPoolPool extends TutlaCommand {
                             return true;
                         }
                         LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().addLoot(new ItemStack(material, stackNumber), weight);
+                        ctx.player.sendMessage("<green>Added item stack to lootpool!");
                     } else {
                         ctx.player.sendMessage(TextUtil.parse("<red>Invalid usage, correct: /lootpool pool add <NAME OF ITEM> <HOW MANY YOU WANT> <THE CHANCE OF GETTING IT, BIGGER = HIGHER CHANCE>"));
                     }
@@ -72,11 +73,14 @@ public class CommandLootPoolPool extends TutlaCommand {
                             return true;
                         }
                         List<LootPool.LootEntry> entries = LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().getEntries();
-                        if (index > entries.size()-1 || index < 0){
-                            ctx.player.sendMessage("<red>Invalid index!");
+                        if (index > entries.size() - 1 || index < 0){
+                            ctx.player.sendMessage(TextUtil.parse("<red>Invalid index!"));
+                            return true;
                         }
-                        entries.remove(index);
-                        ctx.player.sendMessage(TextUtil.parse("<green>Cancelled!"));
+                        LootPool.LootEntry removed = entries.remove(index);
+                        ctx.player.sendMessage(TextUtil.parse(
+                                "<green>Removed: <cyan>" + removed.item.getType()
+                        ));
                     } else {
                         ctx.player.sendMessage(TextUtil.parse("<red>Invalid Usage, correct: /lootpool pool remove <NUMBER OF WHICH ONE YOU WANT TO REMOVE, IF YOU DON'T KNOW DO /lootpool pool list>"));
                     }
@@ -87,15 +91,21 @@ public class CommandLootPoolPool extends TutlaCommand {
                     builder.append("<yellow><bold>");
                     builder.append("Lootpool items");
                     builder.append("</reset></yellow>\n");
-                    LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().getEntries().forEach((lootEntry -> {
-                        builder.append(" <gray>-");
-                        builder.append(lootEntry.item.getAmount());
-                        builder.append("x </gray><cyan>");
-                        builder.append(lootEntry.item.getType().toString());
-                        builder.append("</reset> Weight: ");
-                        builder.append(lootEntry.weight);
-                        builder.append("\n");
-                    }));
+                    var entries = LootPoolManager
+                            .getUninitialisedLootPool()
+                            .getUninitialisedTier()
+                            .getLootpool()
+                            .getEntries();
+
+                    for (LootPool.LootEntry lootEntry : entries) {
+                        builder.append(" <gray>-")
+                                .append(lootEntry.item.getAmount())
+                                .append("x </gray><cyan>")
+                                .append(lootEntry.item.getType())
+                                .append("<reset> Weight: ")
+                                .append(lootEntry.weight)
+                                .append("\n");
+                    }
                     ctx.player.sendMessage(TextUtil.parse(builder.toString()));
                     return true;
                 }

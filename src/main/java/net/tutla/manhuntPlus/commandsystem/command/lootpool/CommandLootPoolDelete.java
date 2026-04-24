@@ -24,10 +24,10 @@ public class CommandLootPoolDelete extends TutlaCommand  {
             if (LootPoolManager.getMapping().levellingExists(ctx.args[1])){
                 LootPoolManager.getMapping().removeLevelling(ctx.args[1]);
             } else {
-                ctx.player.sendMessage(TextUtil.parse("<red>Twist doesn't exist!"));
-                return false;
+                ctx.player.sendMessage(TextUtil.parse("<red>Lootpool doesn't exist!"));
+                return true;
             }
-            ctx.player.sendMessage(TextUtil.parse("<green>Twist:</green> Twist removed!"));
+            ctx.player.sendMessage(TextUtil.parse("<green>Lootpool:</green> Lootpool removed!"));
             return true;
         }
         return false;

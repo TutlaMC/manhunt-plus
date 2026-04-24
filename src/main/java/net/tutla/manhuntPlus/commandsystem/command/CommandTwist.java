@@ -18,7 +18,8 @@ public class CommandTwist extends TutlaCommand {
             new CommandTwistTriggerEntity(),
             new CommandTwistTriggerBlock(),
             new CommandTwistAppliesTo(),
-            new CommandTwistLootpool()
+            new CommandTwistLootpool(),
+            new CommandTwistDescription()
     );
     private static final List<CommandTabAutoComplete> subcommandsAutoCompletes = subcommands.stream().map(cmd -> cmd.autocomplete).toList();
     private static final List<String> subcommandNames = subcommands.stream().map(TutlaCommand::name).toList();
