@@ -18,7 +18,8 @@ public class CommandManhunt extends TutlaCommand {
             new CommandManhuntHelp(),
             new CommandManhuntTwist(),
             new CommandManhuntCountdown(),
-            new CommandManhuntPrepare()
+            new CommandManhuntPrepare(),
+            new CommandManhuntDonate()
     );
     private static final List<CommandTabAutoComplete> subcommandsAutoCompletes = subcommands.stream().map(cmd -> cmd.autocomplete).toList();
     private static final List<String> subcommandNames = subcommands.stream().map(TutlaCommand::name).toList();

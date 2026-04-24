@@ -18,16 +18,20 @@ import java.util.stream.Stream;
 
 public class CommandSystem {
     private final CommandManhunt manhuntCommand = new CommandManhunt();
+    private final CommandTwist twistCommand = new CommandTwist();
+    private final CommandLootPool lootpoolCommand = new CommandLootPool();
     private final List<TutlaCommand> commands = List.of(
             new CompassCommand(),
             manhuntCommand,
-            new CommandTwist(),
+            twistCommand,
             new SurroundCommand(),
-            new CommandLootPool()
+            lootpoolCommand
     );
 
     public void initialise() {
         List<TutlaCommand> toPut = new ArrayList<>(manhuntCommand.getSubcommands());
+        toPut.addAll(twistCommand.getSubcommands());
+        toPut.addAll(lootpoolCommand.getSubcommands());
         toPut.addAll(commands);
         CommandManhuntHelp.generateHelpString(toPut);
     }

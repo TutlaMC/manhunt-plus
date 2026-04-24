@@ -40,7 +40,7 @@ public class CommandLootPoolPool extends TutlaCommand {
                     if (ctx.args.length == 5){
                         Material material = Material.getMaterial(ctx.args[2]);
                         if (material == null){
-                            ctx.player.sendMessage("<red>Invalid item!");
+                            ctx.player.sendMessage(TextUtil.parse("<red>Invalid item!"));
                             return true;
                         }
                         int stackNumber;
@@ -53,11 +53,11 @@ public class CommandLootPoolPool extends TutlaCommand {
                                 return true;
                             }
                         } catch (NumberFormatException e) {
-                            ctx.player.sendMessage("<red>Invalid Number!");
+                            ctx.player.sendMessage(TextUtil.parse("<red>Invalid Number!"));
                             return true;
                         }
                         LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().addLoot(new ItemStack(material, stackNumber), weight);
-                        ctx.player.sendMessage("<green>Added item stack to lootpool!");
+                        ctx.player.sendMessage(TextUtil.parse("<green>Added item stack to lootpool!"));
                     } else {
                         ctx.player.sendMessage(TextUtil.parse("<red>Invalid usage, correct: /lootpool pool add <NAME OF ITEM> <HOW MANY YOU WANT> <THE CHANCE OF GETTING IT, BIGGER = HIGHER CHANCE>"));
                     }
@@ -69,7 +69,7 @@ public class CommandLootPoolPool extends TutlaCommand {
                         try {
                             index = Integer.parseInt(ctx.args[2]);
                         } catch (NumberFormatException e) {
-                            ctx.player.sendMessage("<red>Invalid Number!");
+                            ctx.player.sendMessage(TextUtil.parse("<red>Invalid Number!"));
                             return true;
                         }
                         List<LootPool.LootEntry> entries = LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().getEntries();
@@ -96,9 +96,11 @@ public class CommandLootPoolPool extends TutlaCommand {
                             .getUninitialisedTier()
                             .getLootpool()
                             .getEntries();
-
+                    int e = 0;
                     for (LootPool.LootEntry lootEntry : entries) {
-                        builder.append(" <gray>-")
+                        builder.append(" <gray>[")
+                                .append(e)
+                                .append("] ")
                                 .append(lootEntry.item.getAmount())
                                 .append("x </gray><cyan>")
                                 .append(lootEntry.item.getType())

@@ -50,24 +50,18 @@ public class CommandManhuntHelp extends TutlaCommand {
                         "<gray>A powerful manhunt plugin with compass tracking, twists & full hunt control.</gray>"
         );
 
-        Component twists = TextUtil.parse("""
 
-<yellow><bold>── Twists ──</bold></yellow>
-
-""");
-        for (DefaultTwist twist : DefaultTwist.values()){
-            twists = twists.append(TextUtil.parse("<aqua>"+twist.label+"</aqua> <gray>– "+twist.description+"</gray>\n"));
-        }
         Component footer = TextUtil.parse("""
 
 <yellow><bold>── Links ──</bold></yellow>
 <click:open_url:'https://modrinth.com/plugin/manhunt+'><aqua><bold>📦 Modrinth</bold></aqua></click> <gray>|</gray> \
 <click:open_url:'https://discord.tutla.net'><aqua><bold>💬 Discord</bold></aqua></click> <gray>|</gray> \
 <click:open_url:'https://github.com/TutlaMC/manhunt-plus'><aqua><bold>⭐ GitHub</bold></aqua></click> <gray>|</gray> \
-<click:open_url:'https://wiki.tutla.net/manhunt+'><aqua><bold>🌐 Wiki</bold></aqua></click>
+<click:open_url:'https://wiki.tutla.net/manhunt+'><aqua><bold>🌐 Wiki</bold></aqua></click> <gray>|</gray> \
+<click:open_url:'https://donatr.ee/tutlamc?utm_source=copy&utm_medium=share'><aqua><bold>💙 Donate</bold></aqua></click>
 """);
 
-        helpString = header.append(body).append(twists).append(footer);
+        helpString = header.append(body).append(footer);
     }
 
     private static Component generateHelpStringForCommand(TutlaCommand cmd) {

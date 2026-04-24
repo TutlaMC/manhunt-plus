@@ -18,7 +18,8 @@ public class CommandLootPool extends TutlaCommand {
             new CommandLootPoolMultiplier(),
             new CommandLootPoolComplete(),
             new CommandLootPoolList(),
-            new CommandLootPoolCancel()
+            new CommandLootPoolCancel(),
+            new CommandLootPoolHelp()
     );
     private static final List<CommandTabAutoComplete> subcommandsAutoCompletes = subcommands.stream().map(cmd -> cmd.autocomplete).toList();
     private static final List<String> subcommandNames = subcommands.stream().map(TutlaCommand::name).toList();
