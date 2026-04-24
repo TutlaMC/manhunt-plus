@@ -20,10 +20,11 @@ import java.util.List;
 public class CommandLootPoolPool extends TutlaCommand {
     private static final String usage = "/lootpool pool <add|remove|list> <add:item> <add:number> <add:weight> <remove:index>";
     public CommandLootPoolPool(){
-        super("tier", usage, "Create a new lootpool", CommandSection.LOOTPOOL,
-                new CommandTabAutoComplete("tier", List.of(
+        super("pool", usage, "Create a new lootpool", CommandSection.LOOTPOOL,
+                new CommandTabAutoComplete("pool", List.of(
                         new CommandTabAutoComplete("add", List.of(), "<enum>").setEnum(Material.class),
-                        new CommandTabAutoComplete("remove", null, "") // TODO: add unpool items
+                        new CommandTabAutoComplete("remove", null, ""), // TODO: add unpool items
+                        new CommandTabAutoComplete("list", null, "")
                 ), "<values>")
                         .setValues(List.of("add", "remove"))
         );
@@ -85,11 +86,11 @@ public class CommandLootPoolPool extends TutlaCommand {
                     StringBuilder builder = new StringBuilder();
                     builder.append("<yellow><bold>");
                     builder.append("Lootpool items");
-                    builder.append("</reset>\n");
+                    builder.append("</reset></yellow>\n");
                     LootPoolManager.getUninitialisedLootPool().getUninitialisedTier().getLootpool().getEntries().forEach((lootEntry -> {
-                        builder.append("- <gray>");
+                        builder.append(" <gray>-");
                         builder.append(lootEntry.item.getAmount());
-                        builder.append("x <cyan>");
+                        builder.append("x </gray><cyan>");
                         builder.append(lootEntry.item.getType().toString());
                         builder.append("</reset> Weight: ");
                         builder.append(lootEntry.weight);

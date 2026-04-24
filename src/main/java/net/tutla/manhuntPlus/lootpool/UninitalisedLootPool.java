@@ -12,7 +12,6 @@ public class UninitalisedLootPool {
 
 
     private UninitalisedTier uninitalisedTier;
-    private final List<LootTier> tiers = new ArrayList<>();
 
     private double difficultyMultiplier = 1.5;
 
@@ -39,15 +38,15 @@ public class UninitalisedLootPool {
     }
 
     public List<LootTier> getTiers(){
-        return tiers;
+        return tierBuilder.getTiers();
     }
 
     public List<String> getAllTierNames(){
-        return tiers.stream().map(LootTier::getName).toList();
+        return tierBuilder.getTiers().stream().map(LootTier::getName).toList();
     }
 
     public void removeTierByName(String name){
-        tiers.removeIf(t -> t.getName().equals(name));
+        tierBuilder.getTiers().removeIf(t -> t.getName().equals(name));
     }
 
     public double getDifficultyMultiplier(){

@@ -27,6 +27,10 @@ public class TierBuilder {
         return this;
     }
 
+    public List<LootTier> getTiers() {
+        return tiers;
+    }
+
     public Stream<String> getAllNamesStream(){
         return tiers.stream().map(LootTier::getName);
     }

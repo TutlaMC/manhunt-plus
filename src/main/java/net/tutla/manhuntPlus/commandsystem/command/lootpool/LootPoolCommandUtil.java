@@ -15,6 +15,7 @@ public class LootPoolCommandUtil {
 
     public static boolean existsUninitialisedTier(CommandContext ctx){
         if (existsUninitialised(ctx)) return true;
+        System.out.println(LootPoolManager.getUninitialisedLootPool().getUninitialisedTier());
         if (LootPoolManager.getUninitialisedLootPool().getUninitialisedTier() == null){
             ctx.player.sendMessage(TextUtil.parse("<red>You are not creating a tier, use /lootpool tier create to get started"));
             return true;

@@ -44,6 +44,7 @@ public class CommandLootPoolTier extends TutlaCommand  {
                 case "cancel" -> {
                     LootPoolManager.getUninitialisedLootPool().setUninitalisedTier(null);
                     ctx.player.sendMessage(TextUtil.parse("<green>Cancelled!"));
+                    return true;
                 }
                 case "complete" -> {
                     if (LootPoolCommandUtil.existsUninitialisedTier(ctx)) return true;
@@ -51,6 +52,7 @@ public class CommandLootPoolTier extends TutlaCommand  {
                     LootPoolManager.getUninitialisedLootPool().getTierBuilder().addTier(tier.id,tier.getLootpool());
                     LootPoolManager.getUninitialisedLootPool().setUninitalisedTier(null);
                     ctx.player.sendMessage(TextUtil.parse("<green>Completed making tier!"));
+                    return true;
                 }
                 case "remove" -> {
                     if (ctx.args.length == 3) {
@@ -69,11 +71,11 @@ public class CommandLootPoolTier extends TutlaCommand  {
                     StringBuilder builder = new StringBuilder();
                     builder.append("<yellow><bold>");
                     builder.append("Lootpool tiers");
-                    builder.append("</reset>\n");
+                    builder.append("<reset>\n");
                     LootPoolManager.getUninitialisedLootPool().getTiers().forEach((lootTier -> {
                         builder.append("- <cyan>");
                         builder.append(lootTier.getName());
-                        builder.append("</reset>");
+                        builder.append("<reset>");
                         builder.append("\n");
                     }));
                     ctx.player.sendMessage(TextUtil.parse(builder.toString()));
