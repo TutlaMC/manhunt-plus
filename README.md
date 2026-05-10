@@ -126,6 +126,7 @@
 - 🌀 Many more twists
 - 📊 Leaderboards?
 - 🛠️ More customizability
+- Chest loot twists
 
 ---
 
