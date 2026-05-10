@@ -37,7 +37,8 @@ public class CommandManhunt extends TutlaCommand {
     @Override
     public boolean run(CommandContext ctx) {
         if (ctx.args.length == 0) {
-            return false;
+            help(ctx.player);
+            return true;
         }
         for (TutlaCommand cmd : subcommands){
             if (ctx.args[0].equalsIgnoreCase(cmd.name())){

@@ -15,7 +15,7 @@ public class CommandTwistHelp extends TutlaCommand  {
             "Step 4: Then add an effect <gray>/twist effect <twist> <effect> </gray>\n" +
             "Step 4 (Optional, If your using GIVE_LOOT effect): Add a custom lootpool <gray>/twist lootpool <twist> <lootpool> </gray>\n" +
             "Step 5: Once done you can use the twist by: <gray>/manhunt twist <twist></gray>\n" +
-            "<click:open_url:'https://wiki.tutla.net/manhunt+/twist'><aqua><bold>🌐 Wiki</bold></aqua></click>"+
+            "<click:open_url:'https://wiki.tutla.net/manhunt+/twist'><aqua><bold>🌐 Wiki</bold></aqua></click>\n"+
             "<yellow>────────────────────────────</yellow>";
     public CommandTwistHelp(){
         super("help", usage, "Figure out how to use this subset of commands", CommandSection.LOOTPOOL,  null);
