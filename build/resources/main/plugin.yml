@@ -1,5 +1,5 @@
 name: ManhuntPlus
-version: '1.4'
+version: '1.4.1'
 main: net.tutla.manhuntPlus.ManhuntPlus
 api-version: '26.1.2'
 authors: [ TutlaMC ]

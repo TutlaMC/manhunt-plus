@@ -23,7 +23,7 @@ public class CommandLootPoolMultiplier extends TutlaCommand  {
             try {
                 num = Double.parseDouble(ctx.args[1]);
             } catch (NumberFormatException e) {
-                ctx.player.sendMessage("<red>Invalid Number!");
+                ctx.player.sendMessage(TextUtil.parse("<red>Invalid Number!"));
                 return true;
             }
             LootPoolManager.getUninitialisedLootPool().setDifficultyMultiplier(num);

@@ -107,6 +107,7 @@ public class CommandLootPoolPool extends TutlaCommand {
                                 .append("<reset> Weight: ")
                                 .append(lootEntry.weight)
                                 .append("\n");
+                        e++;
                     }
                     ctx.player.sendMessage(TextUtil.parse(builder.toString()));
                     return true;
